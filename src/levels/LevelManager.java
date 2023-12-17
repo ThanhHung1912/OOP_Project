@@ -17,6 +17,9 @@ public class LevelManager {
         level = new Level(LoadSave.GetLevelData());
         loadTerrain();
     }
+    public Level getCurrentLevel() {
+        return level;
+    }
 
     public void update() {
 

@@ -39,8 +39,8 @@ public class LoadSave {
             for (int j = 0; j < Game.TILES_IN_WIDTH; j++) {
                 Color color = new Color(img.getRGB(j, i));
                 int value = color.getRed();
-                if (value >= 96) {
-                    value = 0;
+                if (value >= 48) {
+                    value = 11;
                 }
                 lvlData[i][j] = value;
             }
