@@ -2,29 +2,23 @@ package entities;
 
 import utilz.LoadSave;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 import static main.Game.UPS;
 import static utilz.Constant.PlayerConstants.*;
 
-public class Player extends Enity{
+public class Player extends Entity {
     private BufferedImage img;
     private BufferedImage[][] animations;
-    private int width = 78;
-    private int height = 58;
-    private final int SCALE = 2;
     private boolean up, left, down, right;
     private int player_action = IDLE;
     private float playerSpeed = 1.0f;
     private boolean isMoving = false;
-    private int aniTick = 0, aniIndex = 0, aniPerSecond = 10;
+    private int aniTick = 0, aniIndex = 0, aniPerSecond = 6;
 
-    public Player(int x, int y) {
-        super(x, y);
+    public Player(int x, int y, int width, int height) {
+        super(x, y, width, height);
         loadAnimation();
     }
 
@@ -60,7 +54,7 @@ public class Player extends Enity{
         updateAnimation();
     }
     public void render(Graphics g) {
-        g.drawImage(animations[player_action][aniIndex], (int) x, (int) y, SCALE*78, SCALE*58, null);
+        g.drawImage(animations[player_action][aniIndex], (int) x, (int) y, width, height, null);
     }
 
     public void updatePos() {
@@ -83,7 +77,7 @@ public class Player extends Enity{
     public void updateAnimation() {
         int last_action = player_action;
         if (isMoving) {
-            player_action = RUN;
+            player_action = RUNNING;
         }
         else {
             player_action = IDLE;
@@ -107,10 +101,10 @@ public class Player extends Enity{
 
     public void loadAnimation() {
         img = LoadSave.getSpriteAtlas(LoadSave.PLAYER_ATLAS);
-        animations = new BufferedImage[10][11];
+        animations = new BufferedImage[9][6];
         for (int i = 0; i < animations.length; i++) {
             for (int j = 0; j < animations[i].length; j++) {
-                animations[i][j] = img.getSubimage(j * width, i * height, width, height);
+                animations[i][j] = img.getSubimage(j * 64, i * 40, 64, 40);
             }
         }
     }

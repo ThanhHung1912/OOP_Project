@@ -31,7 +31,7 @@ public class Game implements Runnable {
     }
 
     public void gameInitialize() {
-        player = new Player(30, 30);
+        player = new Player(30, 30, (int) (SCALE*78), (int) (SCALE*58));
         levelManager = new LevelManager(this);
         gamePanel = new GamePanel(this);
         gameWindow = new GameWindow(gamePanel);

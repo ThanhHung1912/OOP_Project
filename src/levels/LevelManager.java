@@ -25,16 +25,16 @@ public class LevelManager {
         for (int i = 0; i < Game.TILES_IN_HEIGHT; i++) {
             for (int j = 0; j < Game.TILES_IN_WIDTH; j++) {
                 int index = level.getSpriteIndex(j, i);
-                g.drawImage(levelSprites[index], j*TILES_SIZE, i*TILES_SIZE, null);
+                g.drawImage(levelSprites[index], j*TILES_SIZE, i*TILES_SIZE, TILES_SIZE, TILES_SIZE, null);
             }
         }
     }
 
     public void loadTerrain() {
         BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.LEVEL_ATLAS);
-        levelSprites = new BufferedImage[96];
+        levelSprites = new BufferedImage[64];
         int count = 0;
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 12; j++) {
                 levelSprites[count] = img.getSubimage(j * 32, i * 32, 32, 32);
                 count++;

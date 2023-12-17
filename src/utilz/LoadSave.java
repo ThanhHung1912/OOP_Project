@@ -11,8 +11,8 @@ import java.nio.Buffer;
 
 public class LoadSave {
 
-    public static final String PLAYER_ATLAS = "King_Human.png";
-    public static final String LEVEL_ATLAS = "level_sprites.png";
+    public static final String PLAYER_ATLAS = "player_sprites.png";
+    public static final String LEVEL_ATLAS = "outside_sprites.png";
     public static final String LEVEL_DATA = "map.png";
     public static BufferedImage getSpriteAtlas(String fileName) {
         BufferedImage img = null;
@@ -42,7 +42,7 @@ public class LoadSave {
                 if (value >= 96) {
                     value = 0;
                 }
-                lvlData[i][j] = color.getRed();
+                lvlData[i][j] = value;
             }
         }
         return lvlData;
