@@ -2,18 +2,18 @@ package main;
 
 import entities.Player;
 import gameStates.Gamestate;
+import gameStates.Playing;
 import levels.LevelManager;
 
 import java.awt.*;
+import gameStates.Menu;
 
 public class Game implements Runnable {
     private GameWindow gameWindow;
     private GamePanel gamePanel;
-
-    private Player player;
-    private LevelManager levelManager;
-
     private Thread thread;
+    private Menu menu;
+    private Playing playing;
 
 
     public static final int FPS = 120;
@@ -32,19 +32,14 @@ public class Game implements Runnable {
     }
 
     public void gameInitialize() {
-        player = new Player(30, 30, (int) (SCALE*64), (int) (SCALE*40));
-        levelManager = new LevelManager(this);
-        player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
-
+        menu = new gameStates.Menu(this);
+        playing = new Playing (this);
         gamePanel = new GamePanel(this);
         gameWindow = new GameWindow(gamePanel);
         gamePanel.setFocusable(true);
         gamePanel.requestFocus();
     }
 
-    public Player getPlayer() {
-        return player;
-    }
 
     public void startGameLoop() {
         thread = new Thread(this);
@@ -54,10 +49,10 @@ public class Game implements Runnable {
     public void update() {
         switch (Gamestate.state){
             case MENU:
+                menu.update();
                 break;
             case PLAYING:
-                levelManager.update();
-                player.update();
+                playing.update();
                 break;
             default:
                 break;
@@ -65,14 +60,12 @@ public class Game implements Runnable {
 
     }
     public void render(Graphics g) {
-        levelManager.draw(g);
-        player.render(g);
         switch (Gamestate.state){
             case MENU:
+                menu.draw(g);
                 break;
             case PLAYING:
-                levelManager.draw(g);
-                player.render(g);
+                playing.draw(g);
                 break;
             default:
                 break;
@@ -115,5 +108,16 @@ public class Game implements Runnable {
                 lastCheck = currentTime;
             }
         }
+    }
+    public Menu getMenu(){
+        return menu;
+    }
+    public Playing getPlaying(){
+        return playing;
+    }
+
+    public void windowFocusLost() {
+        if (Gamestate.state == Gamestate.PLAYING)
+            playing.getPlayer().resetDirBooleans();
     }
 }

@@ -23,7 +23,7 @@ public class GameWindow {
 
             @Override
             public void windowLostFocus(WindowEvent e) {
-                gamePanel.getGame().getPlayer().resetDirBooleans();            }
+                gamePanel.getGame().windowFocusLost();            }
         });
     }
 }
