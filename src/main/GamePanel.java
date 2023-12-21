@@ -23,6 +23,16 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         game.render(g);
     }
+    private void setPanelSize() {
+        Dimension size = new Dimension(GAME_WIDTH, GAME_HEIGHT);
+        setPreferredSize(size);
+    }
+
+    public void updateGame() {
+
+    }
+
+
 
     public Game getGame() {
         return game;
