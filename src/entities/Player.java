@@ -17,7 +17,7 @@ public class Player extends Entity {
     private int[][] lvlData;
     private boolean up, left, down, right, jump;
     private int player_action = IDLE;
-    private float playerSpeed = 1.0f;
+    private float playerSpeed = 1.0f * SCALE;
     private boolean isMoving = false;
     private int aniTick = 0, aniIndex = 0, aniPerSecond = 10;
 
@@ -81,7 +81,7 @@ public class Player extends Entity {
 
     public void updatePos() {
         isMoving = false;
-        int xSpeed = 0;
+        float xSpeed = 0;
 
         if(jump) {
             jump();
