@@ -14,7 +14,9 @@ public class LoadSave {
     public static final String PLAYER_ATLAS = "player_sprites.png";
     public static final String LEVEL_ATLAS = "outside_sprites.png";
     public static final String LEVEL_DATA = "map.png";
-    public static final String MENU_BUTTON = "button_atlas";
+    public static final String MENU_BUTTON = "button_atlas.png";
+    public static final String MENU_BACKGROUND = "menu_background.png";
+
     public static BufferedImage getSpriteAtlas(String fileName) {
         BufferedImage img = null;
         InputStream is = LoadSave.class.getResourceAsStream("/" + fileName);
