@@ -9,7 +9,6 @@ import main.GameWindow;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import main.Game;
 import ui.PauseOverlay;
 
 public class Playing extends State implements Statemethods{
@@ -17,7 +16,6 @@ public class Playing extends State implements Statemethods{
     private LevelManager levelManager;
     private GamePanel gamePanel;
     private GameWindow gameWindow;
-    private Game game;
 
     private boolean paused = true;
     private PauseOverlay pauseOverlay;
