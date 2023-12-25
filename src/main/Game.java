@@ -34,8 +34,8 @@ public class Game implements Runnable {
     public void gameInitialize() {
         menu = new gameStates.Menu(this);
         playing = new Playing (this);
-        gamePanel = new GamePanel(this);
-        gameWindow = new GameWindow(gamePanel);
+        gamePanel = GamePanel.getGamePanel(this);
+        gameWindow = GameWindow.getGameWindow(gamePanel);
         gamePanel.setFocusable(true);
         gamePanel.requestFocus();
     }
