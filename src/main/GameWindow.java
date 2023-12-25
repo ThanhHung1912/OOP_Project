@@ -6,9 +6,8 @@ import java.awt.event.WindowFocusListener;
 
 public class GameWindow {
     private JFrame jframe;
-    private static GameWindow gameWindow;
 
-    private GameWindow(GamePanel gamePanel) {
+    public GameWindow(GamePanel gamePanel) {
         jframe = new JFrame();
         jframe.add(gamePanel);
         jframe.setResizable(false);
@@ -26,12 +25,5 @@ public class GameWindow {
             public void windowLostFocus(WindowEvent e) {
                 gamePanel.getGame().windowFocusLost();            }
         });
-    }
-
-    public static GameWindow getGameWindow(GamePanel gamePanel) {
-        if (gameWindow == null) {
-            gameWindow = new GameWindow(gamePanel);
-        }
-        return gameWindow;
     }
 }
