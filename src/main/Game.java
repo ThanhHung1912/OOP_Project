@@ -14,6 +14,7 @@ public class Game implements Runnable {
     private Thread thread;
     private Menu menu;
     private Playing playing;
+    private static Game game;
 
 
     public static final int FPS = 120;
@@ -26,12 +27,18 @@ public class Game implements Runnable {
     public final static int TILES_SIZE = (int) (SCALE * TILES_DEFAULT_SIZE);
     public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
     public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
-    public Game() {
+    private Game() {
         gameInitialize();
         startGameLoop();
     }
 
-    public void gameInitialize() {
+    public static Game getGame() {
+        if (game == null)
+            game = new Game();
+        return  game;
+    }
+
+    private void gameInitialize() {
         menu = new gameStates.Menu(this);
         playing = new Playing (this);
         gamePanel = new GamePanel(this);
@@ -41,7 +48,7 @@ public class Game implements Runnable {
     }
 
 
-    public void startGameLoop() {
+    private void startGameLoop() {
         thread = new Thread(this);
         thread.start();
     }
