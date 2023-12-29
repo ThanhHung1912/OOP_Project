@@ -15,8 +15,6 @@ import utilz.LoadSave;
 public class Playing extends State implements Statemethods{
     private Player player;
     private LevelManager levelManager;
-    private GamePanel gamePanel;
-    private GameWindow gameWindow;
     private int xLvlOffset;
     private int leftBorder = (int) (0.2 * Game.GAME_WIDTH);
     private int rightBorder = (int) (0.8 * Game.GAME_WIDTH);
@@ -27,20 +25,17 @@ public class Playing extends State implements Statemethods{
     private boolean paused = false;
     private PauseOverlay pauseOverlay;
 
+
     public Playing (Game game){
         super (game);
-        gameInitialize();
+        initPlaying();
     }
-    public void gameInitialize() {
+    public void initPlaying() {
         levelManager = new LevelManager(game);
         player = new Player(200, 200, (int) (Game.SCALE*64), (int) (Game.SCALE*40));
         player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
         pauseOverlay = new PauseOverlay(this);
 
-        gamePanel = GamePanel.getGamePanel(game);
-        gameWindow = new GameWindow(gamePanel);
-        gamePanel.setFocusable(true);
-        gamePanel.requestFocus();
     }
     @Override
     public void update(){
