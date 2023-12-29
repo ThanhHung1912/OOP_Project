@@ -37,7 +37,7 @@ public class Playing extends State implements Statemethods{
         player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
         pauseOverlay = new PauseOverlay(this);
 
-        gamePanel = new GamePanel(game);
+        gamePanel = GamePanel.getGamePanel(game);
         gameWindow = new GameWindow(gamePanel);
         gamePanel.setFocusable(true);
         gamePanel.requestFocus();

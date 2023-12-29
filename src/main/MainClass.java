@@ -2,6 +2,6 @@ package main;
 
 public class MainClass {
     public static void main(String[] args) {
-        Game game = Game.getGame();
+        Game game = Game.getInstance();
     }
 }

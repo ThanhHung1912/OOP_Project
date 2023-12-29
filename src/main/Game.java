@@ -32,7 +32,7 @@ public class Game implements Runnable {
         startGameLoop();
     }
 
-    public static Game getGame() {
+    public static Game getInstance() {
         if (game == null)
             game = new Game();
         return  game;
@@ -41,8 +41,7 @@ public class Game implements Runnable {
     private void gameInitialize() {
         menu = new gameStates.Menu(this);
         playing = new Playing (this);
-        gamePanel = new GamePanel(this);
-        gameWindow = new GameWindow(gamePanel);
+        gamePanel = GamePanel.getGamePanel(game);
         gamePanel.setFocusable(true);
         gamePanel.requestFocus();
     }
@@ -132,4 +131,9 @@ public class Game implements Runnable {
         if (Gamestate.state == Gamestate.PLAYING)
             playing.getPlayer().resetDirBooleans();
     }
+
+    public Game getGame() {
+        return game;
+    }
+
 }
