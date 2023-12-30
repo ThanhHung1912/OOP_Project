@@ -10,25 +10,35 @@ import java.awt.image.BufferedImage;
 public class LevelManager {
     private Game game;
     private BufferedImage[] levelSprites;
-    private Level level;
+    private Level levelOne;
+
 
     public LevelManager(Game game) {
         this.game = game;
-        level = new Level(LoadSave.GetLevelData());
+        levelOne = new Level(LoadSave.GetLevelData());
         loadTerrain();
     }
+    private void importOutsideSprites() {
+        BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.LEVEL_ATLAS);
+        levelSprites = new BufferedImage[48];
+        for (int j = 0; j < 4; j++)
+            for (int i = 0; i < 12; i++) {
+                int index = j * 12 + i;
+                levelSprites[index] = img.getSubimage(i * 32, j * 32, 32, 32);
+            }
+    }
     public Level getCurrentLevel() {
-        return level;
+        return levelOne;
     }
 
     public void update() {
 
     }
-    public void draw(Graphics g) {
+    public void draw(Graphics g, int lvlOffset) {
         for (int i = 0; i < Game.TILES_IN_HEIGHT; i++) {
-            for (int j = 0; j < Game.TILES_IN_WIDTH; j++) {
-                int index = level.getSpriteIndex(j, i);
-                g.drawImage(levelSprites[index], j*TILES_SIZE, i*TILES_SIZE, TILES_SIZE, TILES_SIZE, null);
+            for (int j = 0; j < levelOne.getLvlData()[0].length; j++) {
+                int index = levelOne.getSpriteIndex(j, i);
+                g.drawImage(levelSprites[index],Game.TILES_SIZE * j - lvlOffset, Game.TILES_SIZE * i, Game.TILES_SIZE, Game.TILES_SIZE, null);
             }
         }
     }

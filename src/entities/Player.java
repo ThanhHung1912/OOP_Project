@@ -19,9 +19,9 @@ public class Player extends Entity {
     private int player_action = IDLE;
     private float playerSpeed = 1.0f * SCALE;
     private boolean isMoving = false;
-    private int aniTick = 0, aniIndex = 0, aniPerSecond = 10;
+    private int aniTick = 0, aniIndex = 0, aniPerSecond = 25;
 
-    private float xDrawOffset = 22 * SCALE;
+    private float xDrawOffset = 21 * SCALE;
     private float yDrawOffset = 4 * SCALE;
 
 
@@ -30,6 +30,7 @@ public class Player extends Entity {
     private float gravity = 0.04f * SCALE;
     private float jumpSpeed = -2.25f * SCALE;
     private float gravityAcceleration = 0.5f * SCALE;
+
     private boolean inAir = false;
 
 
@@ -74,9 +75,10 @@ public class Player extends Entity {
         updateAnimationTick();
         updateAnimation();
     }
-    public void render(Graphics g) {
-        g.drawImage(animations[player_action][aniIndex], (int) (hitBox.x - xDrawOffset), (int) (hitBox.y - yDrawOffset), width, height, null);
-        drawHitBox(g);
+    public void render(Graphics g, int lvlOffset) {
+        g.drawImage(animations[player_action][aniIndex], (int) (hitBox.x - xDrawOffset) - lvlOffset, (int) (hitBox.y - yDrawOffset), width, height, null);
+        g.drawImage(animations[player_action][aniIndex], (int) (hitBox.x - xDrawOffset) - lvlOffset, (int) (hitBox.y - yDrawOffset), width, height, null);
+//		drawHitbox(g);
     }
 
     public void updatePos() {

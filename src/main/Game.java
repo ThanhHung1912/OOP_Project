@@ -32,7 +32,7 @@ public class Game implements Runnable {
         startGameLoop();
     }
 
-    public static Game getGame() {
+    public static Game getInstance() {
         if (game == null)
             game = new Game();
         return  game;
@@ -132,4 +132,9 @@ public class Game implements Runnable {
         if (Gamestate.state == Gamestate.PLAYING)
             playing.getPlayer().resetDirBooleans();
     }
+
+    public Game getGame() {
+        return game;
+    }
+
 }

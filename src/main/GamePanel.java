@@ -1,5 +1,7 @@
 package main;
 
+import entities.Player;
+import gameStates.Gamestate;
 import inputs.KeyboardInputs;
 import inputs.MouseInputs;
 
@@ -10,6 +12,7 @@ import static main.Game.GAME_HEIGHT;
 import static main.Game.GAME_WIDTH;
 
 public class GamePanel extends JPanel {
+    private static GamePanel gamePanel;
     private Game game;
     public GamePanel(Game game) {
         this.game = game;
@@ -19,22 +22,21 @@ public class GamePanel extends JPanel {
         addMouseMotionListener(new MouseInputs(this));
     }
 
+//    public static GamePanel getGamePanel(Game game) {
+//        if (gamePanel == null) {
+//            gamePanel = new GamePanel(game);
+//        }
+//        return gamePanel;
+//    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         game.render(g);
     }
-    private void setPanelSize() {
-        Dimension size = new Dimension(GAME_WIDTH, GAME_HEIGHT);
-        setPreferredSize(size);
-    }
-
-    public void updateGame() {
-
-    }
-
 
 
     public Game getGame() {
         return game;
     }
+
 }

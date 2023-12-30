@@ -10,44 +10,68 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import ui.PauseOverlay;
+import utilz.LoadSave;
 
 public class Playing extends State implements Statemethods{
     private Player player;
     private LevelManager levelManager;
-    private GamePanel gamePanel;
-    private GameWindow gameWindow;
+    private int xLvlOffset;
+    private int leftBorder = (int) (0.2 * Game.GAME_WIDTH);
+    private int rightBorder = (int) (0.8 * Game.GAME_WIDTH);
+    private int lvlTilesWide = LoadSave.GetLevelData()[0].length;
+    private int maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
+    private int maxLvlOffsetX = maxTilesOffset * Game.TILES_SIZE;
 
-    private boolean paused = true;
+    private boolean paused = false;
     private PauseOverlay pauseOverlay;
+
 
     public Playing (Game game){
         super (game);
-        gameInitialize();
+        initPlaying();
     }
-    public void gameInitialize() {
+    public void initPlaying() {
         levelManager = new LevelManager(game);
         player = new Player(200, 200, (int) (Game.SCALE*64), (int) (Game.SCALE*40));
         player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
-        pauseOverlay = new PauseOverlay();
+        pauseOverlay = new PauseOverlay(this);
 
-        gamePanel = new GamePanel(game);
-        gameWindow = new GameWindow(gamePanel);
-        gamePanel.setFocusable(true);
-        gamePanel.requestFocus();
     }
     @Override
     public void update(){
-        levelManager.update();
-        player.update();
+        if (!paused) {
+            levelManager.update();
+            player.update();
+            checkCloseToBorder();
+        } else {
+            pauseOverlay.update();
+        }
+    }
+    private void checkCloseToBorder() {
+        int playerX = (int) player.getHitBox().x;
+        int diff = playerX - xLvlOffset;
 
-        pauseOverlay.update();
+        if (diff > rightBorder)
+            xLvlOffset += diff - rightBorder;
+        else if (diff < leftBorder)
+            xLvlOffset += diff - leftBorder;
+
+        if (xLvlOffset > maxLvlOffsetX)
+            xLvlOffset = maxLvlOffsetX;
+        else if (xLvlOffset < 0)
+            xLvlOffset = 0;
+
     }
     @Override
     public void draw (Graphics g){
-        levelManager.draw(g);
-        player.render(g);
+        levelManager.draw(g, xLvlOffset);
+        player.render(g, xLvlOffset);
 
-        pauseOverlay.draw(g);
+        if (paused) {
+            g.setColor(new Color(0, 0, 0, 150));
+            g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
+            pauseOverlay.draw(g);
+        }
     }
 
     @Override
@@ -94,6 +118,9 @@ public class Playing extends State implements Statemethods{
             case KeyEvent.VK_BACK_SPACE:
                 Gamestate.state = Gamestate.MENU;
                 break;
+            case KeyEvent.VK_ESCAPE:
+                paused = !paused;
+                break;
         }
     }
 
@@ -117,6 +144,14 @@ public class Playing extends State implements Statemethods{
                 break;
         }
     }
+    public void mouseDragged(MouseEvent e) {
+        if (paused)
+            pauseOverlay.mouseDragged(e);
+    }
+    public void unpauseGame() {
+        paused = false;
+    }
+
 
     public Player getPlayer() {
         return player;
