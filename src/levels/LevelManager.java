@@ -18,15 +18,6 @@ public class LevelManager {
         levelOne = new Level(LoadSave.GetLevelData());
         loadTerrain();
     }
-    private void importOutsideSprites() {
-        BufferedImage img = LoadSave.getSpriteAtlas(LoadSave.LEVEL_ATLAS);
-        levelSprites = new BufferedImage[48];
-        for (int j = 0; j < 4; j++)
-            for (int i = 0; i < 12; i++) {
-                int index = j * 12 + i;
-                levelSprites[index] = img.getSubimage(i * 32, j * 32, 32, 32);
-            }
-    }
     public Level getCurrentLevel() {
         return levelOne;
     }

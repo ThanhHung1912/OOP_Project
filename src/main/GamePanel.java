@@ -12,7 +12,6 @@ import static main.Game.GAME_HEIGHT;
 import static main.Game.GAME_WIDTH;
 
 public class GamePanel extends JPanel {
-    private static GamePanel gamePanel;
     private Game game;
     public GamePanel(Game game) {
         this.game = game;
@@ -22,18 +21,10 @@ public class GamePanel extends JPanel {
         addMouseMotionListener(new MouseInputs(this));
     }
 
-//    public static GamePanel getGamePanel(Game game) {
-//        if (gamePanel == null) {
-//            gamePanel = new GamePanel(game);
-//        }
-//        return gamePanel;
-//    }
-
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         game.render(g);
     }
-
 
     public Game getGame() {
         return game;

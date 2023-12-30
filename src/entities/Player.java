@@ -19,7 +19,7 @@ public class Player extends Entity {
     private int player_action = IDLE;
     private float playerSpeed = 1.0f * SCALE;
     private boolean isMoving = false;
-    private int aniTick = 0, aniIndex = 0, aniPerSecond = 25;
+    private int aniTick = 0, aniIndex = 0, aniPerSecond = 10;
 
     private float xDrawOffset = 21 * SCALE;
     private float yDrawOffset = 4 * SCALE;
@@ -36,7 +36,7 @@ public class Player extends Entity {
 
     public Player(int x, int y, int width, int height) {
         super(x, y, width, height);
-        initHitBox(x, y, (int) (20*SCALE), (int)(28*SCALE));
+        initHitBox(x, y, (int) (20*SCALE), (int) (28*SCALE));
         loadAnimation();
     }
 

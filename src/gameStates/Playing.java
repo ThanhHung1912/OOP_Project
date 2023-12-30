@@ -27,7 +27,7 @@ public class Playing extends State implements Statemethods{
 
 
     public Playing (Game game){
-        super (game);
+        super(game);
         initPlaying();
     }
     public void initPlaying() {
@@ -35,7 +35,6 @@ public class Playing extends State implements Statemethods{
         player = new Player(200, 200, (int) (Game.SCALE*64), (int) (Game.SCALE*40));
         player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
         pauseOverlay = new PauseOverlay(this);
-
     }
     @Override
     public void update(){
