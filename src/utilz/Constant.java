@@ -12,8 +12,8 @@ public class Constant {
         public static final int HIT = 3;
         public static final int DEAD = 4;
 
-        public static final int CRABBY_WIDTH_DEFAULT = 70;
-        public static final int CRABBY_HEIGHT_DEFAULT = 30;
+        public static final int CRABBY_WIDTH_DEFAULT = 72;
+        public static final int CRABBY_HEIGHT_DEFAULT = 32;
         public static final int CRABBY_WIDTH = (int) (CRABBY_WIDTH_DEFAULT * Game.SCALE);
         public static final int CRABBY_HEIGHT = (int) (CRABBY_HEIGHT_DEFAULT * Game.SCALE);
 
