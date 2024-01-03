@@ -22,9 +22,9 @@ public abstract class Entity {
         hitBox.x = (int) x;
         hitBox.y = (int) y;
     }*/
-    protected void drawHitbox(Graphics g) {
+    protected void drawHitbox(Graphics g, int xLvlOffset) {
         g.setColor(Color.PINK);
-        g.drawRect((int) hitBox.x, (int) hitBox.y, (int) hitBox.width, (int) hitBox.height);
+        g.drawRect((int) hitBox.x - xLvlOffset , (int) hitBox.y, (int) hitBox.width, (int) hitBox.height);
     }
     public Rectangle2D.Float getHitBox() {
         return hitBox;
