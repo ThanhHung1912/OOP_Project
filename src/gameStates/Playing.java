@@ -31,10 +31,8 @@ public class Playing extends State implements Statemethods{
     private boolean paused = false;
 
 
-
     // Game Over
     private boolean gameOver;
-
 
     public Playing (Game game){
         super(game);

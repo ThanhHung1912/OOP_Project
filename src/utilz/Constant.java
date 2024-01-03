@@ -17,8 +17,8 @@ public class Constant {
         public static final int CRABBY_WIDTH = (int) (CRABBY_WIDTH_DEFAULT * Game.SCALE);
         public static final int CRABBY_HEIGHT = (int) (CRABBY_HEIGHT_DEFAULT * Game.SCALE);
 
-        public static final int CRABBY_DRAWOFFSET_X = (int) (28 * Game.SCALE);
-        public static final int CRABBY_DRAWOFFSET_Y = (int) (9 * Game.SCALE);
+        public static final int CRABBY_DRAWOFFSET_X = (int) (25 * Game.SCALE);
+        public static final int CRABBY_DRAWOFFSET_Y = (int) (6 * Game.SCALE);
 
         public static int GetSpriteAmount(int enemy_type, int enemy_state) {
 
@@ -39,7 +39,6 @@ public class Constant {
             }
 
             return 0;
-
         }
 
         public static int GetMaxHealth(int enemy_type) {

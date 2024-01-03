@@ -77,7 +77,6 @@ public class Player extends Entity {
         attackBox = new Rectangle2D.Float(x, y, (int) (20 * Game.SCALE), (int) (20 * Game.SCALE));
     }
 
-
     public void setUp(boolean up) {
         this.up = up;
     }
@@ -153,6 +152,7 @@ public class Player extends Entity {
                 (int) (hitBox.x - xDrawOffset) - lvlOffset + flipX,
                 (int) (hitBox.y - yDrawOffset), width * flipW, height, null);
         drawUI(g);
+        drawHitbox(g, lvlOffset);
     }
     private void drawUI(Graphics g) {
         g.drawImage(statusBarImg, statusBarX, statusBarY, statusBarWidth, statusBarHeight, null);
@@ -251,7 +251,6 @@ public class Player extends Entity {
             }
 
         }
-
         if (last_action != player_action) {
             aniIndex = 0;
             aniTick = 0;

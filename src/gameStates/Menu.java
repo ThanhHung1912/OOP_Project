@@ -15,8 +15,8 @@ public class Menu extends State implements Statemethods{
     private BufferedImage backgroundImg, backgroundImgPink;
     private int menuX, menuY, menuWidth, menuHeight;
 
-    public Menu (Game game){
-        super (game);
+    public Menu(Game game){
+        super(game);
         loadButtons();
         loadBackground();
         backgroundImgPink = LoadSave.getSpriteAtlas(LoadSave.BACKGROUND_OF_MENU);
