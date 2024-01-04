@@ -18,7 +18,7 @@ public class Player extends Entity {
     private BufferedImage img;
     private BufferedImage[][] animations;
     private int[][] lvlData;
-    private boolean up, left, down, right, jump;
+    private boolean left, right, jump;
     private int player_action = IDLE;
     private float playerSpeed = 1.0f * SCALE;
     private boolean isMoving = false;
@@ -46,7 +46,7 @@ public class Player extends Entity {
     private int statusBarY = (int) (10 * Game.SCALE);
 
     private int healthBarWidth = (int) (150 * Game.SCALE);
-    private int healthBarHeight = (int) (7 * Game.SCALE);
+    private int healthBarHeight = (int) (4 * Game.SCALE);
     private int healthBarXStart = (int) (34 * Game.SCALE);
     private int healthBarYStart = (int) (14 * Game.SCALE);
 
@@ -77,22 +77,13 @@ public class Player extends Entity {
         attackBox = new Rectangle2D.Float(x, y, (int) (20 * Game.SCALE), (int) (20 * Game.SCALE));
     }
 
-    public void setUp(boolean up) {
-        this.up = up;
-    }
-
+    //set direction
     public void setLeft(boolean left) {
         this.left = left;
     }
-
-    public void setDown(boolean down) {
-        this.down = down;
-    }
-
     public void setRight(boolean right) {
         this.right = right;
     }
-
     public void setJump(boolean jump) {
         this.jump = jump;
     }
@@ -102,13 +93,8 @@ public class Player extends Entity {
     }
 
     public void resetDirBooleans() {
-        up = false;
         left = false;
-        down = false;
         right = false;
-    }
-    public void setPlayer_action(int player_action) {
-        this.player_action = player_action;
     }
 
     public void update() {

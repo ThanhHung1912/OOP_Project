@@ -3,13 +3,13 @@ package gameStates;
 import entities.*;
 import levels.LevelManager;
 import main.Game;
-import main.GamePanel;
-import main.GameWindow;
+
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 import ui.GameOverOverlay;
 import ui.PauseOverlay;
@@ -27,16 +27,18 @@ public class Playing extends State implements Statemethods{
     private int lvlTilesWide = LoadSave.GetLevelData()[0].length;
     private int maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
     private int maxLvlOffsetX = maxTilesOffset * Game.TILES_SIZE;
+    private BufferedImage backgroundImg;
 
+    //Pause
     private boolean paused = false;
-
-
     // Game Over
     private boolean gameOver;
 
     public Playing (Game game){
         super(game);
         initPlaying();
+
+        backgroundImg = LoadSave.getSpriteAtlas(LoadSave.PLAYING_BG_IMG);
     }
     public void initPlaying() {
         levelManager = new LevelManager(game);
@@ -81,7 +83,8 @@ public class Playing extends State implements Statemethods{
     }
 
     @Override
-    public void draw (Graphics g){
+    public void draw(Graphics g){
+        g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
         levelManager.draw(g, xLvlOffset);
         player.render(g, xLvlOffset);
         enemyManager.draw(g, xLvlOffset);
