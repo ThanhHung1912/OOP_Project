@@ -111,7 +111,6 @@ public abstract class Enemy extends Entity {
         aniIndex = 0;
     }
 
-
     public void hurt(int amount) {
         currentHealth -= amount;
         if (currentHealth <= 0)
