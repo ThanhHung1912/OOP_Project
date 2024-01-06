@@ -3,12 +3,17 @@ package utilz;
 import main.Game;
 
 import javax.imageio.ImageIO;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.Buffer;
+import java.util.Arrays;
+
 import entities.Crabby;
 
 import static utilz.Constant.EnemyConstant.CRABBY;
@@ -51,6 +56,29 @@ public class LoadSave {
         return img;
     }
 
+    public static BufferedImage[] GetAllLevels() {
+        URL url = LoadSave.class.getResource("/lvls");
+        File file = null;
+
+        try {
+            file = new File(url.toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        File[] files = file.listFiles();
+        Arrays.sort(files);
+
+        BufferedImage[] imgs = new BufferedImage[files.length];
+        for (int i = 0; i < imgs.length; i++) {
+            try {
+                imgs[i] = ImageIO.read(files[i]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return imgs;
+    }
     public static ArrayList<Crabby> GetCrabs() {
         BufferedImage img = getSpriteAtlas(LEVEL_DATA);
         ArrayList<Crabby> list = new ArrayList<>();
