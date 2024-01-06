@@ -70,7 +70,12 @@ public class Player extends Entity {
         initHitBox(x, y, (int) (20*SCALE), (int) (28*SCALE));
         loadAnimation();
         initAttackBox();
-
+    }
+    public void setSpawn(Point spawn) {
+        this.x = spawn.x;
+        this.y = spawn.y;
+        hitBox.x = x;
+        hitBox.y = y;
     }
 
     private void initAttackBox() {
@@ -293,6 +298,10 @@ public class Player extends Entity {
 
         hitBox.x = x;
         hitBox.y = y;
+
+        //this is for reset player direction
+        flipX = 0;
+        flipW = 1;
 
         if (!IsEntityOnFloor(hitBox, lvlData))
             inAir = true;
