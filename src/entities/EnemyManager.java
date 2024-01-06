@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Graphics;
 import gameStates.Playing;
+import levels.Level;
 import utilz.LoadSave;
 
 import java.awt.geom.Rectangle2D;
@@ -17,16 +18,21 @@ public class EnemyManager {
     public EnemyManager(Playing playing) {
         this.playing = playing;
         loadEnemyImgs();
-        addEnemies();
     }
-    private void addEnemies() {
-        crabbies = LoadSave.GetCrabs();
+    public void loadEnemies(Level level) {
+        crabbies = level.getCrabs();
     }
 
     public void update(int[][] lvlData, Player player) {
+        boolean isAnyActive = false;
         for (Crabby c : crabbies) {
-            if (c.isActive())
+            if (c.isActive()) {
+                isAnyActive = true;
                 c.update(lvlData, player);
+            }
+        }
+        if (!isAnyActive) {
+            playing.setLevelCompleted(true);
         }
 
     }

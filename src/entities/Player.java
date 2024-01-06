@@ -266,7 +266,7 @@ public class Player extends Entity {
         }
         statusBarImg = LoadSave.getSpriteAtlas(LoadSave.STATUS_BAR);
     }
-    public void loadLvlData ( int[][] lvlData){
+    public void loadLvlData (int[][] lvlData){
         this.lvlData = lvlData;
         if (!IsEntityOnFloor(hitBox, lvlData))
             inAir = true;

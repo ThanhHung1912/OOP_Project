@@ -79,32 +79,4 @@ public class LoadSave {
         }
         return imgs;
     }
-    public static ArrayList<Crabby> GetCrabs() {
-        BufferedImage img = getSpriteAtlas(LEVEL_DATA);
-        ArrayList<Crabby> list = new ArrayList<>();
-        for (int j = 0; j < img.getHeight(); j++)
-            for (int i = 0; i < img.getWidth(); i++) {
-                Color color = new Color(img.getRGB(i, j));
-                int value = color.getGreen();
-                if (value == CRABBY)
-                    list.add(new Crabby(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
-            }
-        return list;
-
-    }
-    public static int[][] GetLevelData() {
-        BufferedImage img = getSpriteAtlas(LEVEL_DATA);
-        int[][] lvlData = new int[img.getHeight()][img.getWidth()];
-        for (int i = 0; i < img.getHeight(); i++) {
-            for (int j = 0; j < img.getWidth(); j++) {
-                Color color = new Color(img.getRGB(j, i));
-                int value = color.getRed();
-                if (value >= 48) {
-                    value = 11;
-                }
-                lvlData[i][j] = value;
-            }
-        }
-        return lvlData;
-    }
 }
