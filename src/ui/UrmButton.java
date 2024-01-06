@@ -26,7 +26,7 @@ public class UrmButton extends PauseButton{
 
     }
 
-    public void update() {
+    public void   update() {
         index = 0;
         if (mouseOver)
             index = 1;

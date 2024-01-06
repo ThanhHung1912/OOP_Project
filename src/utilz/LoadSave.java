@@ -30,6 +30,7 @@ public class LoadSave {
     public static final String PLAYING_BG_IMG = "playing_bg_img.png";
     public static final String BIG_CLOUDS = "big_clouds.png";
     public static final String SMALL_CLOUDS = "small_clouds.png";
+    public static final String COMPLETED_IMG = "completed_sprite.png";
 
     public static BufferedImage getSpriteAtlas(String fileName) {
         BufferedImage img = null;

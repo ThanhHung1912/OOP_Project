@@ -183,5 +183,4 @@ public class PauseOverlay {
         return b.getBounds().contains(e.getX(), e.getY());
     }
 
-
 }
