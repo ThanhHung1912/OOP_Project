@@ -8,17 +8,14 @@ import static utilz.Constant.Directions.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Float;
 
 
 public class Crabby extends Enemy{
 
-    // AttackBox
-    private Rectangle2D.Float attackBox;
     private int attackBoxOffsetX;
     public Crabby(float x, float y) {
         super(x, y, CRABBY_WIDTH, CRABBY_HEIGHT, CRABBY);
-        initHitBox(x, y, (int) (22 * Game.SCALE), (int) (24 * Game.SCALE));
+        initHitBox(22, 24);
         initAttackBox();
     }
 
@@ -39,36 +36,6 @@ public class Crabby extends Enemy{
         attackBox.y = hitBox.y;
 
     }
-
-    public void drawAttackBox(Graphics g, int xLvlOffset) {
-        g.setColor(Color.red);
-        g.drawRect((int)attackBox.x - xLvlOffset,(int) attackBox.y,(int) attackBox.width,(int) attackBox.height);
-    }
-
-    private void updateMove(int[][] lvlData, Player player) {
-        if (firstUpdate)
-            firstUpdateCheck(lvlData);
-
-        if (inAir)
-            updateInAir(lvlData);
-        else {
-            switch (enemyState) {
-                case IDLE:
-                    newState(RUNNING);
-                    break;
-                case RUNNING:
-                    if (canSeePlayer(lvlData, player))
-                        chasingPlayer(player);
-                    if ((isPlayerCloseForAttack(player)))
-                        newState(ATTACK);
-
-                    move(lvlData);
-                    break;
-            }
-        }
-
-    }
-
     private void updateBehavior(int[][] lvlData, Player player) {
         if (firstUpdate)
             firstUpdateCheck(lvlData);
@@ -76,7 +43,7 @@ public class Crabby extends Enemy{
         if (inAir)
             updateInAir(lvlData);
         else {
-            switch (enemyState) {
+            switch (state) {
                 case IDLE:
                     newState(RUNNING);
                     break;

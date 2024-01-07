@@ -3,6 +3,8 @@ package utilz;
 import main.Game;
 
 public class Constant {
+    public static final float GRAVITY = 0.04f * Game.SCALE;
+    public static final int ANIMATION_PER_SECOND = 10;
     public static class Environment {
         public static final int BIG_CLOUDS_WIDTH_DEFAULT = 408;
         public static final int BIG_CLOUDS_HEIGHT_DEFAULT = 101;
