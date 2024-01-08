@@ -209,6 +209,9 @@ public class Playing extends State implements Statemethods{
                 case KeyEvent.VK_SPACE:
                     player.setJump(true);
                     break;
+                case KeyEvent.VK_Z:
+                    player.setAttacking(true);
+                    break;
                 case KeyEvent.VK_BACK_SPACE:
                     Gamestate.state = Gamestate.MENU;
                     break;
@@ -227,6 +230,9 @@ public class Playing extends State implements Statemethods{
                     break;
                 case KeyEvent.VK_RIGHT:
                     player.setRight(false);
+                    break;
+                case KeyEvent.VK_Z:
+                    player.setAttacking(false);
                     break;
                 case KeyEvent.VK_SPACE:
                     player.setJump(false);
