@@ -15,7 +15,7 @@ public class Crabby extends Enemy{
     private int attackBoxOffsetX;
     public Crabby(float x, float y) {
         super(x, y, CRABBY_WIDTH, CRABBY_HEIGHT, CRABBY);
-        initHitBox(24, 24);
+        initHitBox(22, 24);
         initAttackBox();
     }
 
