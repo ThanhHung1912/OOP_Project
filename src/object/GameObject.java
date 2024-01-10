@@ -20,13 +20,17 @@ public class GameObject {
         this.y =y;
         this.objectType = objectType;
     }
-    private void updateAnimationTick() {
+    protected void updateAnimationTick() {
         aniTick++;
         if (aniTick >= UPS / ANIMATION_PER_SECOND) {
             aniTick = 0;
             aniIndex++;
             if (aniIndex >= GetSpriteAmount(objectType)) {
                 aniIndex = 0;
+                if (objectType == BARREL||objectType == BOX){
+                    doAnimation = false;
+                    active = false;
+                }
             }
         }
     }
@@ -34,7 +38,11 @@ public class GameObject {
         aniIndex =0;
         aniTick =0;
         active = true;
-        doAnimation = true;
+        if (objectType == BARREL||objectType == BOX){
+            doAnimation = false;
+        }
+        else{
+        doAnimation = true;}
     }
     protected void initHitbox (int width, int height){
         hitbox = new Rectangle2D.Float(x,y,(int)(width* Game.SCALE), (int)(height*Game.SCALE));
