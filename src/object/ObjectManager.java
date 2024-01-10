@@ -1,6 +1,7 @@
 package object;
 
 import gameStates.Playing;
+import levels.Level;
 import utilz.LoadSave;
 
 import java.awt.*;
@@ -18,12 +19,18 @@ public class ObjectManager {
     public ObjectManager(Playing playing) {
         this.playing = playing;
         loadImgs();
-        potions = new ArrayList<>();
+        /*potions = new ArrayList<>();
         potions.add (new Potion (300,300,RED_POTION));
         potions.add (new Potion (400,300,BLUE_POTION));
         containers = new ArrayList<>();
         containers.add (new GameContainer(500,300, BARREL));
-        containers.add (new GameContainer(600,300, BOX));
+        containers.add (new GameContainer(600,300, BOX));*/
+    }
+    public void applyEffectToPlayer(Potion p) {
+        if (p.getObjectType() == RED_POTION)
+            playing.getPlayer().changeHealth(RED_POTION_VALUE);
+        else
+            playing.getPlayer().changePower(BLUE_POTION_VALUE);
     }
 
     private void loadImgs() {
@@ -41,13 +48,6 @@ public class ObjectManager {
             for (int i = 0; i < containerImgs[j].length; i++)
                 containerImgs[j][i] = containerSprite.getSubimage(40 * i, 30 * j, 40, 30);
 
-       /* BufferedImage potionSprite = LoadSave.getSpriteAtlas(LoadSave.POTION_ATLAS);
-        potionImgs = new BufferedImage[2][7];
-        for (int j = 0; j < potionImgs.length; j++) {
-            for (int i = 0; i < potionImgs[j].length; j++) {
-                potionImgs[j][i] = potionSprite.getSubimage(40 * i, 30 * j, 40, 30);
-            }
-        }*/
     }
 
     public void update() {
@@ -89,5 +89,10 @@ public class ObjectManager {
 
             }
         }
+    }
+
+    public void loadObjects(Level newLevel) {
+        potions = newLevel.getPotions();
+        containers = newLevel.getContainers();
     }
 }

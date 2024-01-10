@@ -299,5 +299,9 @@ public class Player extends Entity {
         if (!IsEntityOnFloor(hitBox, lvlData))
             inAir = true;
     }
+    public void changePower(int value) {
+        System.out.println("Added power!");
+    }
+
 
 }
