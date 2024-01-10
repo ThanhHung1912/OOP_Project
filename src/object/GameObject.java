@@ -63,6 +63,9 @@ public class GameObject {
     public boolean isActive(){
         return active;
     }
+    public int getxDrawOffSet(){
+        return xDrawOffSet;
+    }
     public int getyDrawOffSet(){
         return yDrawOffSet;
     }
