@@ -125,6 +125,7 @@ public class Playing extends State implements Statemethods{
         lvlCompleted = false;
         player.resetAll();
         enemyManager.resetAllEnemies();
+        objectManager.resetAllObject();
     }
 
     @Override
@@ -276,6 +277,13 @@ public class Playing extends State implements Statemethods{
     }
     public ObjectManager getObjectManager(){
         return objectManager;
+    }
+    public void checkPotionTouch(Rectangle2D.Float hitbox){
+        objectManager.checkObjectTouched(hitbox);
+
+    }
+    public void checkObjectHit(Rectangle2D.Float attackbox){
+        objectManager.checkObjectHit(attackbox);
     }
 
 }

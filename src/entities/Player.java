@@ -104,10 +104,17 @@ public class Player extends Entity {
             return;
         }
         updatePos();
+        if (isMoving)
+            checkPotionTouched();
+
         if (attacking)
             checkAttack();
         updateAnimationTick();
         updateAnimation();
+    }
+
+    private void checkPotionTouched() {
+        playing.checkPotionTouch(hitBox);
     }
 
     private void checkAttack() {
@@ -115,6 +122,7 @@ public class Player extends Entity {
             return;
         attackChecked = true;
         playing.checkEnemyHit(attackBox);
+        playing.checkObjectHit(attackBox);
 
     }
     private void updateAttackBox() {

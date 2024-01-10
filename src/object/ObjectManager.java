@@ -5,6 +5,7 @@ import levels.Level;
 import utilz.LoadSave;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -94,5 +95,34 @@ public class ObjectManager {
     public void loadObjects(Level newLevel) {
         potions = newLevel.getPotions();
         containers = newLevel.getContainers();
+    }
+    public void checkObjectTouched(Rectangle2D.Float hitbox){
+        for (Potion p: potions)
+            if (p.isActive()){
+                if (hitbox.intersects(p.getHitbox())){
+                    p.setActive(false);
+                    applyEffectToPlayer(p);
+                }
+            }
+    }
+    public void checkObjectHit(Rectangle2D.Float attackbox) {
+        for (GameContainer gc : containers)
+            if (gc.isActive()) {
+                if (gc.getHitbox().intersects(attackbox)) {
+                    gc.setAnimation(true);
+                    int type =0;
+                    if (gc.getObjectType() == BARREL){
+                        type = 1;
+                    }
+                    potions.add (new Potion((int)(gc.getHitbox().x+gc.getHitbox().width/2), (int)(gc.getHitbox().y-gc.getHitbox().height/1), type ));
+                    return;
+                }
+            }
+    }
+    public void resetAllObject(){
+        for (Potion p: potions)
+            p.reset();
+        for (GameContainer gc : containers)
+            gc.reset();
     }
 }
