@@ -272,6 +272,10 @@ public class Playing extends State implements Statemethods{
     public EnemyManager getEnemyManager() {
         return enemyManager;
     }
+
+    public LevelManager getLevelManager() {
+        return levelManager;
+    }
     public void windowFocusLost() {
         player.resetDirBooleans();
     }
@@ -281,6 +285,10 @@ public class Playing extends State implements Statemethods{
     public void checkPotionTouch(Rectangle2D.Float hitbox){
         objectManager.checkObjectTouched(hitbox);
 
+    }
+
+    public void checkSpikesTouched(Player p) {
+        objectManager.checkSpikesTouched(p);
     }
     public void checkObjectHit(Rectangle2D.Float attackbox){
         objectManager.checkObjectHit(attackbox);

@@ -1,13 +1,10 @@
 package main;
 
-import entities.Player;
 import gameStates.Gamestate;
 import gameStates.Playing;
-import levels.LevelManager;
 
 import java.awt.*;
 import gameStates.Menu;
-import utilz.LoadSave;
 
 public class Game implements Runnable {
     private GameWindow gameWindow;
