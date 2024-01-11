@@ -216,6 +216,9 @@ public class Playing extends State implements Statemethods{
                 case KeyEvent.VK_SPACE:
                     player.setJump(true);
                     break;
+                case KeyEvent.VK_Z:
+                    player.setAttacking(true);
+                    break;
                 case KeyEvent.VK_BACK_SPACE:
                     Gamestate.state = Gamestate.MENU;
                     break;
@@ -237,6 +240,9 @@ public class Playing extends State implements Statemethods{
                     break;
                 case KeyEvent.VK_SPACE:
                     player.setJump(false);
+                    break;
+                case KeyEvent.VK_Z:
+                    player.setAttacking(false);
                     break;
             }
     }
@@ -272,6 +278,10 @@ public class Playing extends State implements Statemethods{
     public EnemyManager getEnemyManager() {
         return enemyManager;
     }
+
+    public LevelManager getLevelManager() {
+        return levelManager;
+    }
     public void windowFocusLost() {
         player.resetDirBooleans();
     }
@@ -281,6 +291,10 @@ public class Playing extends State implements Statemethods{
     public void checkPotionTouch(Rectangle2D.Float hitbox){
         objectManager.checkObjectTouched(hitbox);
 
+    }
+
+    public void checkSpikesTouched(Player p) {
+        objectManager.checkSpikesTouched(p);
     }
     public void checkObjectHit(Rectangle2D.Float attackbox){
         objectManager.checkObjectHit(attackbox);
