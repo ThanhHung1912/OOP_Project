@@ -14,6 +14,13 @@ public class GameWindow implements GameFacade {
         jframe.setResizable(false);
         jframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        jframe.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+
         jframe.addWindowFocusListener(new WindowFocusListener() {
             @Override
             public void windowGainedFocus(WindowEvent e) {
@@ -32,6 +39,7 @@ public class GameWindow implements GameFacade {
         jframe.pack();
         jframe.setLocationRelativeTo(null);
         jframe.setVisible(true);
+
 
     }
 
