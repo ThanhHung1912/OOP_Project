@@ -30,7 +30,7 @@ Dương
 ![alt_text](https://github.com/hungngoiu/OOP_Project/blob/Facade/res/Screenshots1.png)
 
 ## Code and assets
-Path to code: `https://github.com/hungngoiu/OOP_Project/tree/master/src`.
+Path to code: `https://github.com/hungngoiu/OOP_Project/tree/master/src`.<br>
 Path to assets: `https://github.com/hungngoiu/OOP_Project/tree/master/res`.
 
 ## References
