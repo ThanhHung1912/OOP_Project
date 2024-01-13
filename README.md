@@ -1,6 +1,6 @@
 # Pirate King 
 <h2>Contributors</h2>
-Nguyễn Thành Hưng - ITCSIU22051 - https://github.com/ThanhHung1912.
+Nguyễn Thành Hưng - ITCSIU22051 - https://github.com/ThanhHung1912.<br>
 Ngô Nam Hưng
 Hồ Trung Thy Giang
 Dương 
