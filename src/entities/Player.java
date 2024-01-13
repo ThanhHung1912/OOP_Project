@@ -153,8 +153,8 @@ public class Player extends Entity {
                 (int) (hitBox.x - xDrawOffset) - lvlOffset + flipX,
                 (int) (hitBox.y - yDrawOffset), width * flipW, height, null);
         drawUI(g);
-        drawHitbox(g, lvlOffset);
-        drawAttackBox(g, lvlOffset);
+//        drawHitbox(g, lvlOffset);
+//        drawAttackBox(g, lvlOffset);
     }
     private void drawUI(Graphics g) {
         g.drawImage(statusBarImg, statusBarX, statusBarY, statusBarWidth, statusBarHeight, null);
