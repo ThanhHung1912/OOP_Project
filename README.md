@@ -8,10 +8,10 @@ Dương
 
 
 <h2> Features </h2>
-- 3 Levels with different difficulties.
-- Player: a Pirate.
-- Enemy: Crabby.
-- Spike: Death instant.
+- 3 Levels with different difficulties.<br>
+- Player: a Pirate.<br>
+- Enemy: Crabby.<br>
+- Spike: Death instant.<br>
 
 
 ## Tutorial
