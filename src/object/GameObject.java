@@ -40,7 +40,7 @@ public class GameObject {
         aniIndex =0;
         aniTick =0;
         active = true;
-        if (objectType == BARREL||objectType == BOX){
+        if (objectType == BARREL||objectType == BOX || objectType == CANNON_LEFT || objectType == CANNON_RIGHT){
             doAnimation = false;
         }
         else{
@@ -76,6 +76,9 @@ public class GameObject {
     }
     public int getAniIndex(){
         return aniIndex;
+    }
+    public int getAniTick() {
+        return aniTick;
     }
     public void setAnimation (boolean a){
         this.doAnimation = a;

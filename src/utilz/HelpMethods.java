@@ -2,10 +2,7 @@ package utilz;
 
 import entities.Crabby;
 import main.Game;
-import object.GameContainer;
-import object.Potion;
-import object.Spike;
-import object.Cannon;
+import object.*;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -112,6 +109,11 @@ public class HelpMethods {
                         return true;
 
         return false;
+    }
+
+    public static boolean IsProjectileHittingLevel(Projectile p, int[][] lvlData) {
+        return isSolid(p.getHitbox().x + p.getHitbox().width / 2, p.getHitbox().y + p.getHitbox().height / 2, lvlData);
+
     }
 
     private static boolean isSolid(float x, float y, int[][] lvlData) {
