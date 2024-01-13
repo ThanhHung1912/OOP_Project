@@ -4,13 +4,24 @@ import main.Game;
 
 public class Constant {
     public static final float GRAVITY = 0.04f * Game.SCALE;
-    public static final int ANIMATION_PER_SECOND = 10;
+    public static final int ANIMATION_PER_SECOND = 8;
+
+    public static class Projectiles{
+        public static final int CANNON_BALL_DEFAULT_WIDTH = 15;
+        public static final int CANNON_BALL_DEFAULT_HEIGHT = 15;
+
+        public static final int CANNON_BALL_WIDTH = (int)(Game.SCALE * CANNON_BALL_DEFAULT_WIDTH);
+        public static final int CANNON_BALL_HEIGHT = (int)(Game.SCALE * CANNON_BALL_DEFAULT_HEIGHT);
+        public static final float SPEED = 0.5f * Game.SCALE;
+    }
     public static class ObjectConstant {
         public static final int RED_POTION =0;
         public static final int BLUE_POTION =1;
         public static final int BARREL =2;
         public static final int BOX =3;
         public static final int SPIKE = 4;
+        public static final int CANNON_LEFT = 5;
+        public static final int CANNON_RIGHT = 6;
         public static final int RED_POTION_VALUE = 15;//HEALTH
         public static final int BLUE_POTION_VALUE = 10;//POWER
         public static final int CONTAINER_WIDTH_DEFAULT = 40;
@@ -26,6 +37,10 @@ public class Constant {
         public static final int SPIKE_HEIGHT_DEFAULT = 32;
         public static final int SPIKE_WIDTH = (int) (Game.SCALE * SPIKE_WIDTH_DEFAULT);
         public static final int SPIKE_HEIGHT = (int) (Game.SCALE * SPIKE_HEIGHT_DEFAULT);
+        public static final int CANNON_WIDTH_DEFAULT = 40;
+        public static final int CANNON_HEIGHT_DEFAULT = 26;
+        public static final int CANNON_WIDTH = (int) (CANNON_WIDTH_DEFAULT * Game.SCALE);
+        public static final int CANNON_HEIGHT = (int) (CANNON_HEIGHT_DEFAULT * Game.SCALE);
         public static int GetSpriteAmount(int object_type) {
 
             switch (object_type) {
@@ -33,6 +48,8 @@ public class Constant {
                     return 7;
                 case BARREL, BOX:
                     return 8;
+                case CANNON_LEFT, CANNON_RIGHT:
+                    return 7;
             }
             return 1;
         }

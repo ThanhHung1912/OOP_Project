@@ -51,6 +51,8 @@ public class Player extends Entity {
     private boolean attackChecked;
     protected Playing playing;
 
+    private int tileY = 0;
+
 
     public Player(int x, int y, int width, int height, Playing playing) {
         super(x, y, width, height);
@@ -104,9 +106,11 @@ public class Player extends Entity {
             return;
         }
         updatePos();
-        if (isMoving)
+        if (isMoving) {
             checkPotionTouched();
             checkSpikesTouched();
+            tileY = (int) (hitBox.y / Game.TILES_SIZE);
+        }
 
         if (attacking)
             checkAttack();
@@ -320,6 +324,9 @@ public class Player extends Entity {
     }
     public void changePower(int value) {
         System.out.println("Added power!");
+    }
+    public int getTileY() {
+        return tileY;
     }
 
 
