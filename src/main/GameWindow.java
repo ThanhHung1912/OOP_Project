@@ -1,20 +1,19 @@
 package main;
 
 import javax.swing.JFrame;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
-public class GameWindow {
+public class GameWindow implements GameFacade {
     private JFrame jframe;
-
-    public GameWindow(GamePanel gamePanel) {
+    public void createWindow(GamePanel gamePanel) {
         jframe = new JFrame();
         jframe.add(gamePanel);
+        jframe.setTitle("Pirate King");
         jframe.setResizable(false);
-        jframe.pack();
-        jframe.setLocationRelativeTo(null);
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jframe.setVisible(true);
+        jframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
         jframe.addWindowFocusListener(new WindowFocusListener() {
             @Override
             public void windowGainedFocus(WindowEvent e) {
@@ -23,7 +22,17 @@ public class GameWindow {
 
             @Override
             public void windowLostFocus(WindowEvent e) {
-                gamePanel.getGame().getPlaying().windowFocusLost();        }
+                // Handle window focus lost event
+                gamePanel.getGame().getPlaying().windowFocusLost();
+            }
         });
+
+        // Add your game panel or other components to the JFrame here
+
+        jframe.pack();
+        jframe.setLocationRelativeTo(null);
+        jframe.setVisible(true);
+
     }
+
 }
