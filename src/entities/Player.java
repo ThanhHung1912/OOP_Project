@@ -9,9 +9,7 @@ import java.awt.image.BufferedImage;
 import gameStates.Playing;
 
 import static main.Game.SCALE;
-import static main.Game.UPS;
-import static utilz.Constant.ANIMATION_PER_SECOND;
-import static utilz.Constant.GRAVITY;
+import static utilz.Constant.*;
 import static utilz.Constant.PlayerConstants.*;
 import static utilz.HelpMethods.*;
 
@@ -109,7 +107,7 @@ public class Player extends Entity {
                 aniTick = 0;
                 aniIndex = 0;
                 playing.setPlayerDying(true);
-            } else if(aniIndex == GetSpriteAmount(DEAD) - 1 && aniTick >= ANIMATION_PER_SECOND - 1){
+            } else if(aniIndex == GetSpriteAmount(DEAD) - 1 && aniTick >= TICKS_PER_ANI - 1){
                 playing.setGameOver(true);
             } else {
                 updateAnimationTick();
@@ -276,7 +274,7 @@ public class Player extends Entity {
 
     public void updateAnimationTick() {
         aniTick++;
-        if (aniTick >= UPS / ANIMATION_PER_SECOND) {
+        if (aniTick >= TICKS_PER_ANI) {
             aniIndex++;
             aniTick = 0;
             if (aniIndex >= GetSpriteAmount(state)) {
