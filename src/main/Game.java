@@ -1,5 +1,6 @@
 package main;
 
+import audio.AudioPlayer;
 import gameStates.GameOptions;
 import gameStates.Gamestate;
 import gameStates.Playing;
@@ -17,6 +18,7 @@ public class Game implements Runnable {
     private Menu menu;
     private Playing playing;
     private AudioOptions audioOptions;
+    private AudioPlayer audioPlayer;
     private GameOptions gameOptions;
 
     public static final int FPS = 120;
@@ -133,6 +135,10 @@ public class Game implements Runnable {
             }
         }
     }
+
+    public Game getGame() {
+        return game;
+    }
     public Menu getMenu(){
         return menu;
     }
@@ -148,12 +154,14 @@ public class Game implements Runnable {
         return audioOptions;
     }
 
+    public AudioPlayer getAudioPlayer() {
+        return audioPlayer;
+    }
+
     public void windowFocusLost() {
         if (Gamestate.state == Gamestate.PLAYING)
             playing.getPlayer().resetDirBooleans();
     }
 
-    public Game getGame() {
-        return game;
-    }
+
 }
