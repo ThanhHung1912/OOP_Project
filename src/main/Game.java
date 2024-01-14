@@ -1,5 +1,6 @@
 package main;
 
+import gameStates.GameOptions;
 import gameStates.Gamestate;
 import gameStates.Playing;
 
@@ -16,6 +17,7 @@ public class Game implements Runnable {
     private Menu menu;
     private Playing playing;
     private AudioOptions audioOptions;
+    private GameOptions gameOptions;
 
     public static final int FPS = 120;
     public static final int UPS = 200;
@@ -43,7 +45,7 @@ public class Game implements Runnable {
         audioOptions = new AudioOptions();
         menu = new gameStates.Menu(this);
         playing = new Playing (this);
-
+        gameOptions = new GameOptions(this);
 
         gamePanel = new GamePanel(this);
         gameWindow = new GameWindow();
@@ -67,7 +69,8 @@ public class Game implements Runnable {
                 playing.update();
                 break;
             case OPTIONS:
-
+                gameOptions.update();
+                break;
             case QUIT:
                 System.exit(0);
                 break;
@@ -84,6 +87,10 @@ public class Game implements Runnable {
             case PLAYING:
                 playing.draw(g);
                 break;
+            case OPTIONS:
+                gameOptions.draw(g);
+                break;
+                
             default:
                 break;
         }
@@ -131,6 +138,10 @@ public class Game implements Runnable {
     }
     public Playing getPlaying(){
         return playing;
+    }
+
+    public GameOptions getGameOptions() {
+        return gameOptions;
     }
 
     public AudioOptions getAudioOptions() {

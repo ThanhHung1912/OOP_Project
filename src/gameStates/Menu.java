@@ -12,20 +12,20 @@ import java.awt.image.BufferedImage;
 public class Menu extends State implements Statemethods{
 
     private MenuButton[] buttons = new MenuButton[3];
-    private BufferedImage backgroundImg, backgroundImgPink;
+    private BufferedImage menuBackgroundImg, backgroundImg;
     private int menuX, menuY, menuWidth, menuHeight;
 
     public Menu(Game game){
         super(game);
         loadButtons();
         loadBackground();
-        backgroundImgPink = LoadSave.getSpriteAtlas(LoadSave.BACKGROUND_OF_MENU);
+        backgroundImg = LoadSave.getSpriteAtlas(LoadSave.BACKGROUND_OF_MENU);
     }
 
     private void loadBackground() {
-        backgroundImg = LoadSave.getSpriteAtlas(LoadSave.MENU_BACKGROUND);
-        menuWidth = (int) (backgroundImg.getWidth() * Game.SCALE);
-        menuHeight = (int) (backgroundImg.getHeight() * Game.SCALE);
+        menuBackgroundImg = LoadSave.getSpriteAtlas(LoadSave.MENU_BACKGROUND);
+        menuWidth = (int) (menuBackgroundImg.getWidth() * Game.SCALE);
+        menuHeight = (int) (menuBackgroundImg.getHeight() * Game.SCALE);
         menuX = Game.GAME_WIDTH / 2 - menuWidth / 2;
         menuY = (int) (45 * Game.SCALE);
     }
@@ -48,8 +48,8 @@ public class Menu extends State implements Statemethods{
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(backgroundImgPink, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
-        g.drawImage(backgroundImg, menuX, menuY, menuWidth, menuHeight, null);
+        g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+        g.drawImage(menuBackgroundImg, menuX, menuY, menuWidth, menuHeight, null);
         for(MenuButton mb : buttons){
             mb.draw(g);
         }
