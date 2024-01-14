@@ -57,4 +57,20 @@ public class AudioPlayer {
         }
         return null;
     }
+
+    private void updateSongVolume(){
+        FloatControl gainControl = (FloatControl) songs[currentSongId].getControl(FloatControl.Type.MASTER_GAIN);
+        float range = gainControl.getMaximum() - gainControl.getMinimum();
+        float gain = (range * volume) + gainControl.getMinimum();
+        gainControl.setValue(gain);
+    }
+
+    private void updateEffectsVolume(){
+        for(Clip c : effects) {
+            FloatControl gainControl = (FloatControl) songs[currentSongId].getControl(FloatControl.Type.MASTER_GAIN);
+            float range = gainControl.getMaximum() - gainControl.getMinimum();
+            float gain = (range * volume) + gainControl.getMinimum();
+            gainControl.setValue(gain);
+        }
+    }
 }
