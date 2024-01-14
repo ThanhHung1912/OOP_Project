@@ -5,15 +5,17 @@ import gameStates.Playing;
 
 import java.awt.*;
 import gameStates.Menu;
+import ui.AudioOptions;
 
 public class Game implements Runnable {
+    private static Game game;
     private GameWindow gameWindow;
     private GamePanel gamePanel;
     private Thread thread;
+
     private Menu menu;
     private Playing playing;
-    private static Game game;
-
+    private AudioOptions audioOptions;
 
     public static final int FPS = 120;
     public static final int UPS = 200;
@@ -30,6 +32,7 @@ public class Game implements Runnable {
         startGameLoop();
     }
 
+    //Singleton Pattern application for Game
     public static Game getInstance() {
         if (game == null)
             game = new Game();
@@ -37,8 +40,11 @@ public class Game implements Runnable {
     }
 
     private void gameInitialize() {
+        audioOptions = new AudioOptions();
         menu = new gameStates.Menu(this);
         playing = new Playing (this);
+
+
         gamePanel = new GamePanel(this);
         gameWindow = new GameWindow();
         gameWindow.createWindow(gamePanel);
@@ -125,6 +131,10 @@ public class Game implements Runnable {
     }
     public Playing getPlaying(){
         return playing;
+    }
+
+    public AudioOptions getAudioOptions() {
+        return audioOptions;
     }
 
     public void windowFocusLost() {
