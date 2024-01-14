@@ -5,6 +5,7 @@ import main.Game;
 public class Constant {
     public static final float GRAVITY = 0.04f * Game.SCALE;
     public static final int ANIMATION_PER_SECOND = 8;
+    public static final int TICKS_PER_ANI = Game.UPS / ANIMATION_PER_SECOND;
 
     public static class Projectiles{
         public static final int CANNON_BALL_DEFAULT_WIDTH = 15;
