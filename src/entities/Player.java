@@ -99,12 +99,27 @@ public class Player extends Entity {
 
     public void update() {
         updateHealthBar();
-        updateAttackBox();
 
-        if (currentHealth <= 0) {
-            playing.setGameOver(true);
+
+        if(currentHealth <= 0) {
+//            playing.setGameOver(true);
+            if(state != DEAD){
+                state = DEAD;
+                //Reset animation
+                aniTick = 0;
+                aniIndex = 0;
+                playing.setPlayerDying(true);
+            } else if(aniIndex == GetSpriteAmount(DEAD) - 1 && aniTick >= ANIMATION_PER_SECOND - 1){
+                playing.setGameOver(true);
+            } else {
+                updateAnimationTick();
+            }
+
             return;
         }
+
+        updateAttackBox();
+
         updatePos();
         if (isMoving) {
             checkPotionTouched();

@@ -44,6 +44,8 @@ public class Playing extends State implements Statemethods{
     private boolean gameOver = false;
     //Game Completed
     private boolean lvlCompleted = false;
+    //Player dying
+    private boolean playerDying = false;
 
     public Playing (Game game){
         super(game);
@@ -94,6 +96,10 @@ public class Playing extends State implements Statemethods{
         }
         else if (lvlCompleted) {
             levelCompletedOverlay.update();
+        } else if (gameOver){
+//            gameOverOverlay.update();
+        } else if (playerDying){
+            player.update();
         }
         else if (!gameOver) {
             levelManager.update();
@@ -123,6 +129,7 @@ public class Playing extends State implements Statemethods{
         gameOver = false;
         paused = false;
         lvlCompleted = false;
+        playerDying = false;
         player.resetAll();
         enemyManager.resetAllEnemies();
         objectManager.resetAllObject();
@@ -300,4 +307,7 @@ public class Playing extends State implements Statemethods{
         objectManager.checkObjectHit(attackbox);
     }
 
+    public void setPlayerDying(boolean playerDying){
+        this.playerDying = playerDying;
+    }
 }
