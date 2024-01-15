@@ -104,7 +104,7 @@ public class ObjectManager {
                 if (gc.getObjectType() == BARREL) {
                     type = 1;
                 }
-                g.drawImage(containerImgs[type][gc.getAniIndex()], (int) (gc.getHitbox().x - gc.getxDrawOffSet() - xLvlOffset), (int) (gc.getHitbox().y - gc.getxDrawOffSet()), CONTAINER_WIDTH, CONTAINER_HEIGHT, null);
+                g.drawImage(containerImgs[type][gc.getAniIndex()], (int) (gc.getHitbox().x - gc.getxDrawOffSet() - xLvlOffset), (int) (gc.getHitbox().y - gc.getyDrawOffSet()), CONTAINER_WIDTH, CONTAINER_HEIGHT, null);
 
             }
         }
@@ -116,7 +116,7 @@ public class ObjectManager {
                 int type = 0;// blue
                 if (p.getObjectType() == RED_POTION)
                     type = 1; //red
-                g.drawImage(potionImgs[type][p.getAniIndex()], (int) (p.getHitbox().x - p.getxDrawOffSet() - xLvlOffset), (int) (p.getHitbox().y - p.getxDrawOffSet()), POTION_WIDTH, POTION_HEIGHT, null);
+                g.drawImage(potionImgs[type][p.getAniIndex()], (int) (p.getHitbox().x - p.getxDrawOffSet() - xLvlOffset), (int) (p.getHitbox().y - p.getyDrawOffSet()), POTION_WIDTH, POTION_HEIGHT, null);
 
             }
         }
