@@ -21,9 +21,9 @@ public class Potion extends GameObject{
     private void updateHover() {
         hoverOffset += (0.075f * Game.SCALE * hoverDir);
         if (hoverOffset >= maxHoverOffset){
-            hoverOffset = -1;
+            hoverDir = -1;
         }
-        else if(hoverOffset <0){
+        else if(hoverOffset < 0){
             hoverDir = 1;
         }
         hitbox.y = y + hoverOffset;

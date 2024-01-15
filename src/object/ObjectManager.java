@@ -221,12 +221,12 @@ public class ObjectManager {
             if (gc.isActive() && !gc.doAnimation) {
                 if (gc.getHitbox().intersects(attackbox)) {
                     gc.setAnimation(true);
-                    int type =0;
+                    int type = 0;
                     if (gc.getObjectType() == BARREL){
                         type = 1;
                     }
-                    potions.add (new Potion((int)(gc.getHitbox().x+gc.getHitbox().width/2),
-                            (int)(gc.getHitbox().y- gc.getHitbox().height), type ));
+                    potions.add (new Potion((int) (gc.getHitbox().x / Game.TILES_SIZE) * Game.TILES_SIZE,
+                            (int)(gc.getHitbox().y / Game.TILES_SIZE) * Game.TILES_SIZE, type ));
                     return;
                 }
             }
