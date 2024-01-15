@@ -1,8 +1,8 @@
 # Pirate King 
 <h2>Contributors</h2>
 Nguyễn Thành Hưng - ITCSIU22051 - https://github.com/ThanhHung1912.<br>
-Ngô Nam Hưng
-Hồ Trung Thy Giang - ITCSIU22186 - https://github.com/httgiang
+Ngô Nam Hưng.<br>
+Hồ Trung Thy Giang - ITCSIU22186 - https://github.com/httgiang.<br>
 Dương 
 
 
@@ -28,6 +28,7 @@ Dương
 
 ## Screenshots from game
 ![alt_text](https://github.com/hungngoiu/OOP_Project/blob/Facade/res/Screenshots1.png)
+![alt_text](https://github.com/hungngoiu/OOP_Project/blob/audio/res/Screenshots2.png)
 
 ## Code and assets
 Path to code: `https://github.com/hungngoiu/OOP_Project/tree/master/src`.<br>
