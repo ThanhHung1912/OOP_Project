@@ -5,9 +5,8 @@ import java.awt.geom.Rectangle2D;
 
 import static main.Game.SCALE;
 import static main.Game.UPS;
-import static utilz.Constant.ANIMATION_PER_SECOND;
+import static utilz.Constant.*;
 import static utilz.Constant.EnemyConstant.*;
-import static utilz.Constant.GRAVITY;
 import static utilz.HelpMethods.*;
 import static utilz.Constant.Directions.*;
 public abstract class Enemy extends Entity {
@@ -130,7 +129,7 @@ public abstract class Enemy extends Entity {
 
     private void updateAnimationTick() {
         aniTick++;
-        if (aniTick >= UPS / ANIMATION_PER_SECOND) {
+        if (aniTick >= TICKS_PER_ANI) {
             aniTick = 0;
             aniIndex++;
             if (aniIndex >= GetSpriteAmount(enemyType, state)) {
