@@ -8,6 +8,7 @@ import java.awt.geom.Rectangle2D;
 import static main.Game.UPS;
 import static utilz.Constant.ANIMATION_PER_SECOND;
 import static utilz.Constant.ObjectConstant.*;
+import static utilz.Constant.TICKS_PER_ANI;
 
 public class GameObject {
     protected int x,y, objectType;
@@ -16,13 +17,13 @@ public class GameObject {
     protected int aniTick, aniIndex;
     protected int xDrawOffSet, yDrawOffSet;
     public GameObject (int x, int y, int objectType){
-        this.x=x;
-        this.y =y;
+        this.x = x;
+        this.y = y;
         this.objectType = objectType;
     }
     protected void updateAnimationTick() {
         aniTick++;
-        if (aniTick >= UPS / ANIMATION_PER_SECOND) {
+        if (aniTick >= TICKS_PER_ANI) {
             aniTick = 0;
             aniIndex++;
             if (aniIndex >= GetSpriteAmount(objectType)) {
@@ -37,8 +38,8 @@ public class GameObject {
         }
     }
     public void reset(){
-        aniIndex =0;
-        aniTick =0;
+        aniIndex = 0;
+        aniTick = 0;
         active = true;
         if (objectType == BARREL||objectType == BOX || objectType == CANNON_LEFT || objectType == CANNON_RIGHT){
             doAnimation = false;
