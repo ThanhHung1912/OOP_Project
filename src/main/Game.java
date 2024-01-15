@@ -4,14 +4,10 @@ import audio.AudioPlayer;
 import gameStates.GameOptions;
 import gameStates.Gamestate;
 import gameStates.Playing;
-
 import java.awt.*;
-import java.io.IOException;
 
 import gameStates.Menu;
 import ui.AudioOptions;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Game implements Runnable {
     private static Game game;
@@ -35,19 +31,19 @@ public class Game implements Runnable {
     public final static int TILES_SIZE = (int) (SCALE * TILES_DEFAULT_SIZE);
     public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
     public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
-    private Game() throws UnsupportedAudioFileException, IOException {
+    private Game(){
         gameInitialize();
         startGameLoop();
     }
 
     //Singleton Pattern application for Game
-    public static Game getInstance() throws UnsupportedAudioFileException, IOException {
+    public static Game getInstance() {
         if (game == null)
             game = new Game();
         return  game;
     }
 
-    private void gameInitialize() throws UnsupportedAudioFileException, IOException {
+    private void gameInitialize(){
         audioOptions = new AudioOptions(this);
         audioPlayer = new AudioPlayer();
         menu = new gameStates.Menu(this);
@@ -97,7 +93,6 @@ public class Game implements Runnable {
             case OPTIONS:
                 gameOptions.draw(g);
                 break;
-                
             default:
                 break;
         }

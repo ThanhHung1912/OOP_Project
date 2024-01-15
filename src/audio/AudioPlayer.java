@@ -24,14 +24,14 @@ public class AudioPlayer {
     private boolean songMute, effectMute;
     private Random rand = new Random();
 
-    public AudioPlayer() throws UnsupportedAudioFileException, IOException {
+    public AudioPlayer() {
         loadSongs();
         loadEffects();
         playSong(MENU_1);
     }
 
     //Load audios
-    private void loadSongs() throws UnsupportedAudioFileException, IOException {
+    private void loadSongs(){
         String[] songNames = { "menu", "level1", "level2"};
         songs = new Clip[songNames.length];
         for(int i = 0; i < songs.length; i++){
@@ -40,20 +40,22 @@ public class AudioPlayer {
 
     }
 
-    private void loadEffects() throws UnsupportedAudioFileException, IOException {
+    private void loadEffects() {
         String[] effectNames = { "die", "jump", "gameover", "lvlcompleted", "attack1", "attack2", "attack3" };
         effects = new Clip[effectNames.length];
-        for (int i = 0; i < effects.length; i++)
+        for (int i = 0; i < effects.length; i++) {
             effects[i] = getClip(effectNames[i]);
+        }
 
         updateEffectsVolume();
     }
 
-    private Clip getClip(String name) throws UnsupportedAudioFileException, IOException {
+    private Clip getClip(String name) {
         URL url = getClass().getResource("/audio/" + name + ".wav");
         AudioInputStream audio;
 
         try {
+            assert url != null;
             audio = AudioSystem.getAudioInputStream(url);
             Clip c = AudioSystem.getClip();
             c.open(audio);
