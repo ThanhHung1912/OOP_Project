@@ -409,14 +409,19 @@ public class Player extends Entity {
         hitBox.x = x;
         hitBox.y = y;
 
-        //this is for reset player direction
-        flipX = 0;
-        flipW = 1;
+        resetAttackBox();
 
         if (!IsEntityOnFloor(hitBox, lvlData))
             inAir = true;
     }
 
+    public void resetAttackBox(){
+        if(flipW == 1){
+            attackBox.x = hitBox.x + hitBox.width + (int) (Game.SCALE * 10);
+        } else {
+            attackBox.x = hitBox.x - hitBox.width - (int) (Game.SCALE * 10);
+        }
+    }
     public int getTileY() {
         return tileY;
     }
