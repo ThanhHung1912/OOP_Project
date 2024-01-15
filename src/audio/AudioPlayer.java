@@ -6,9 +6,11 @@ import java.net.URL;
 import java.util.Random;
 
 public class AudioPlayer {
+
     public static int MENU_1 = 0;
     public static int LEVEL_1 = 1;
     public static int LEVEL_2 = 2;
+    private final int LEVEL_3 = 3;
 
     public static int DIE = 0;
     public static int JUMP = 1;
@@ -32,7 +34,7 @@ public class AudioPlayer {
 
     //Load audios
     private void loadSongs(){
-        String[] songNames = { "menu", "level1", "level2"};
+        String[] songNames = { "menu", "level1", "level2", "level3"};
         songs = new Clip[songNames.length];
         for(int i = 0; i < songs.length; i++){
             songs[i] = getClip(songNames[i]);
@@ -134,10 +136,12 @@ public class AudioPlayer {
         }
     }
     public void setLevelSong(int lvlIndex){
-        if(lvlIndex % 2 == 0){
+        if(lvlIndex == 0 ){
             playSong(LEVEL_1);
-        } else {
+        } else if (lvlIndex == 1) {
             playSong(LEVEL_2);
+        } else if (lvlIndex == 2){
+            playSong(LEVEL_3);
         }
     }
 

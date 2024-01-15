@@ -177,7 +177,13 @@ public class Player extends Entity {
 
     }
     private void updateAttackBox() {
-        if (right || (powerAttackActive && flipW == 1))
+        if (right && left){
+            if(flipW == 1){
+                attackBox.x = hitBox.x + hitBox.width + (int) (Game.SCALE * 10);
+            } else {
+                attackBox.x = hitBox.x - hitBox.width - (int) (Game.SCALE * 10);
+            }
+        } else if (right || (powerAttackActive && flipW == 1))
             attackBox.x = hitBox.x + hitBox.width + (int) (Game.SCALE * 10);
         else if (left || (powerAttackActive && flipW == -1))
             attackBox.x = hitBox.x - hitBox.width - (int) (Game.SCALE * 10);
@@ -231,19 +237,19 @@ public class Player extends Entity {
             }
         float xSpeed = 0;
 
-        if (left) {
+        if (left && !right) {
             xSpeed -= walkSpeed;
             flipX = width;
             flipW = -1;
         }
-        if (right) {
+        if (right && !left) {
             xSpeed += walkSpeed;
             flipX = 0;
             flipW = 1;
         }
 
         if(powerAttackActive){
-            if(!left && !right){
+            if((!left && !right) || (left && right)){
                 if(flipW == -1){
                     xSpeed = -walkSpeed;
                 } else {
@@ -396,20 +402,26 @@ public class Player extends Entity {
         inAir = false;
         attacking = false;
         isMoving = false;
+        airSpeed = 0f;
         state = IDLE;
         currentHealth = maxHealth;
 
         hitBox.x = x;
         hitBox.y = y;
 
-        //this is for reset player direction
-        flipX = 0;
-        flipW = 1;
+        resetAttackBox();
 
         if (!IsEntityOnFloor(hitBox, lvlData))
             inAir = true;
     }
 
+    public void resetAttackBox(){
+        if(flipW == 1){
+            attackBox.x = hitBox.x + hitBox.width + (int) (Game.SCALE * 10);
+        } else {
+            attackBox.x = hitBox.x - hitBox.width - (int) (Game.SCALE * 10);
+        }
+    }
     public int getTileY() {
         return tileY;
     }
