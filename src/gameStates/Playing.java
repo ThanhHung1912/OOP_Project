@@ -1,5 +1,6 @@
 package gameStates;
 
+import audio.AudioPlayer;
 import entities.*;
 import levels.LevelManager;
 import main.Game;
@@ -270,6 +271,9 @@ public class Playing extends State implements Statemethods{
     }
     public void setLevelCompleted(boolean levelCompleted) {
         this.lvlCompleted = levelCompleted;
+        if(levelCompleted){
+            game.getAudioPlayer().LvlCompleted();
+        }
     }
     public void unpauseGame() {
         paused = false;

@@ -1,10 +1,11 @@
 package main;
 
+import audio.AudioPlayer;
 import gameStates.GameOptions;
 import gameStates.Gamestate;
 import gameStates.Playing;
-
 import java.awt.*;
+
 import gameStates.Menu;
 import ui.AudioOptions;
 
@@ -17,6 +18,7 @@ public class Game implements Runnable {
     private Menu menu;
     private Playing playing;
     private AudioOptions audioOptions;
+    private AudioPlayer audioPlayer;
     private GameOptions gameOptions;
 
     public static final int FPS = 120;
@@ -29,7 +31,7 @@ public class Game implements Runnable {
     public final static int TILES_SIZE = (int) (SCALE * TILES_DEFAULT_SIZE);
     public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
     public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
-    private Game() {
+    private Game(){
         gameInitialize();
         startGameLoop();
     }
@@ -41,8 +43,9 @@ public class Game implements Runnable {
         return  game;
     }
 
-    private void gameInitialize() {
-        audioOptions = new AudioOptions();
+    private void gameInitialize(){
+        audioOptions = new AudioOptions(this);
+        audioPlayer = new AudioPlayer();
         menu = new gameStates.Menu(this);
         playing = new Playing (this);
         gameOptions = new GameOptions(this);
@@ -90,7 +93,6 @@ public class Game implements Runnable {
             case OPTIONS:
                 gameOptions.draw(g);
                 break;
-                
             default:
                 break;
         }
@@ -133,6 +135,10 @@ public class Game implements Runnable {
             }
         }
     }
+
+    public Game getGame() {
+        return game;
+    }
     public Menu getMenu(){
         return menu;
     }
@@ -148,12 +154,14 @@ public class Game implements Runnable {
         return audioOptions;
     }
 
+    public AudioPlayer getAudioPlayer() {
+        return audioPlayer;
+    }
+
     public void windowFocusLost() {
         if (Gamestate.state == Gamestate.PLAYING)
             playing.getPlayer().resetDirBooleans();
     }
 
-    public Game getGame() {
-        return game;
-    }
+
 }
