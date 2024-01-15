@@ -402,6 +402,7 @@ public class Player extends Entity {
         inAir = false;
         attacking = false;
         isMoving = false;
+        airSpeed = 0f;
         state = IDLE;
         currentHealth = maxHealth;
 
