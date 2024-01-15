@@ -28,7 +28,7 @@ Dương
 
 ## Screenshots from game
 ![alt_text](https://github.com/hungngoiu/OOP_Project/blob/Facade/res/Screenshots1.png)
-![alt_text](https://github.com/hungngoiu/OOP_Project/blob/audio/res/Screenshots2.png)
+![alt_text](https://github.com/hungngoiu/OOP_Project/blob/master/res/Screenshots2.png)
 
 ## Code and assets
 Path to code: `https://github.com/hungngoiu/OOP_Project/tree/master/src`.<br>
