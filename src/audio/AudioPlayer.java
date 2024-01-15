@@ -24,9 +24,13 @@ public class AudioPlayer {
     private boolean songMute, effectMute;
     private Random rand = new Random();
 
-    public AudioPlayer() {
+    public AudioPlayer() throws UnsupportedAudioFileException, IOException {
+        loadSongs();
+        loadEffects();
+        playSong(MENU_1);
     }
 
+    //Load audios
     private void loadSongs() throws UnsupportedAudioFileException, IOException {
         String[] songNames = { "menu", "level1", "level2"};
         songs = new Clip[songNames.length];
@@ -41,6 +45,8 @@ public class AudioPlayer {
         effects = new Clip[effectNames.length];
         for (int i = 0; i < effects.length; i++)
             effects[i] = getClip(effectNames[i]);
+
+        updateEffectsVolume();
     }
 
     private Clip getClip(String name) throws UnsupportedAudioFileException, IOException {
@@ -58,6 +64,7 @@ public class AudioPlayer {
         return null;
     }
 
+    //Update volume
     private void updateSongVolume(){
         FloatControl gainControl = (FloatControl) songs[currentSongId].getControl(FloatControl.Type.MASTER_GAIN);
         float range = gainControl.getMaximum() - gainControl.getMinimum();
@@ -73,4 +80,68 @@ public class AudioPlayer {
             gainControl.setValue(gain);
         }
     }
+
+    //Toggle mute
+    public void toggleSongMute(){
+        this.songMute = !songMute;
+        for (Clip c : songs){
+            BooleanControl booleanControl = (BooleanControl) c.getControl(BooleanControl.Type.MUTE);
+            booleanControl.setValue(songMute);
+        }
+    }
+    public void toggleEffectMute(){
+        this.effectMute = !effectMute;
+        for (Clip c : effects) {
+            BooleanControl booleanControl = (BooleanControl) c.getControl(BooleanControl.Type.MUTE);
+            booleanControl.setValue(effectMute);
+        }
+        if(!effectMute){
+            playEffect(JUMP);
+        }
+    }
+
+    //Play audios
+    public void playEffect(int effect) {
+        effects[effect].setMicrosecondPosition(0);
+        effects[effect].start();
+    }
+    public void playSong(int song) {
+        stopSong(); //stop the previous song
+
+        currentSongId = song;
+        updateSongVolume();
+        songs[currentSongId].setMicrosecondPosition(0);
+        songs[currentSongId].loop(Clip.LOOP_CONTINUOUSLY); //keep looping
+    }
+
+    public void playAttackSound(){
+        int start = 4; //the value of attack1
+        start += rand.nextInt(3);
+        playEffect(start);
+    }
+
+    public void setVolume(float volume){
+        this.volume = volume;
+        updateSongVolume();
+        updateEffectsVolume();
+    }
+
+    public void stopSong(){
+        if(songs[currentSongId].isActive()){
+            songs[currentSongId].stop();
+        }
+    }
+    public void setLevelSong(int lvlIndex){
+        if(lvlIndex % 2 == 0){
+            playSong(LEVEL_1);
+        } else {
+            playSong(LEVEL_2);
+        }
+    }
+
+    public void LvlCompleted(){
+        stopSong();
+        playEffect(LVL_COMPLETED);
+    }
+
 }
