@@ -19,7 +19,8 @@ public class Level {
     private ArrayList<Potion> potions;
     private ArrayList<Spike> spikes;
     private ArrayList<Cannon> cannons;
-    private ArrayList<Chest> chest;
+    private ArrayList<Chest> chests;
+    private ArrayList<Key> keys;
     private int lvlTilesWide;
     private int maxTilesOffset;
     private int maxLvlOffsetX;
@@ -34,10 +35,16 @@ public class Level {
         createContainers();
         createSpikes();
         createCannons();
-        createChest();
+        createChests();
+        createKeys();
         calcLvlOffset();
         calcPlayerSpawn();
     }
+
+    private void createKeys() {
+        keys = HelpMethods.GetKeys(img);
+    }
+
     private void createCannons() {
         cannons = HelpMethods.GetCannons(img);
     }
@@ -66,8 +73,8 @@ public class Level {
     private void createSpikes() {
         spikes = HelpMethods.GetSpikes(img);
     }
-    private void createChest() {
-        chest = HelpMethods.GetChest(img);
+    private void createChests() {
+        chests = HelpMethods.GetChests(img);
     }
     private void createLevelData() {
         lvlData = GetLevelData(img);
@@ -90,14 +97,16 @@ public class Level {
     }
     public ArrayList<Potion> getPotions(){ return potions;}
     public ArrayList<GameContainer> getContainers(){ return containers;}
-
     public ArrayList<Spike> getSpikes() {
         return spikes;
     }
     public ArrayList<Cannon> getCannons(){
         return cannons;
     }
-    public ArrayList<Chest> getChest() {
-        return chest;
+    public ArrayList<Chest> getChests() {
+        return chests;
+    }
+    public ArrayList<Key> getKeys() {
+        return keys;
     }
 }

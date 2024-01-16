@@ -25,18 +25,22 @@ public class GameObject {
             aniTick = 0;
             aniIndex++;
             if (aniIndex >= GetSpriteAmount(objectType)) {
-                if (objectType == BARREL||objectType == BOX){
+                if (objectType == BARREL || objectType == BOX){
                     doAnimation = false;
                     active = false;
                     aniIndex = 0;
-                } else if (objectType == CANNON_LEFT || objectType == CANNON_RIGHT) {
+                }
+                else if (objectType == CANNON_LEFT || objectType == CANNON_RIGHT) {
                     doAnimation = false;
                     aniIndex = 0;
-                } else if (objectType == TREASURE_CHEST) {
+                }
+                else if (objectType == TREASURE_CHEST) {
                     doAnimation = false;
                     aniIndex--;
-                } else if (objectType == BLUE_POTION || objectType == RED_POTION)
+                }
+                else if (objectType == BLUE_POTION || objectType == RED_POTION || objectType == KEY) {
                     aniIndex = 0;
+                }
             }
         }
     }

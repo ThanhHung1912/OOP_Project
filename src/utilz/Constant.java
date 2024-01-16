@@ -18,12 +18,13 @@ public class Constant {
     public static class ObjectConstant {
         public static final int RED_POTION = 0;
         public static final int BLUE_POTION = 1;
-        public static final int BARREL = 7;
+        public static final int BARREL = 2;
         public static final int BOX = 3;
         public static final int SPIKE = 4;
-        public static final int CANNON_LEFT = 5;
-        public static final int CANNON_RIGHT = 6;
-        public static final int TREASURE_CHEST = 2;
+        public static final int CANNON_LEFT = 7;
+        public static final int CANNON_RIGHT = 8;
+        public static final int TREASURE_CHEST = 5;
+        public static final int KEY = 6;
 
         public static final int RED_POTION_VALUE = 15;//HEALTH
         public static final int BLUE_POTION_VALUE = 10;//POWER
@@ -53,6 +54,10 @@ public class Constant {
         public static final int TREASURE_CHEST_WIDTH = (int) (TREASURE_CHEST_WIDTH_DEFAULT * Game.SCALE);
         public static final int TREASURE_CHEST_HEIGHT = (int) (TREASURE_CHEST_HEIGHT_DEFAULT * Game.SCALE);
 
+        public static final int KEY_WIDTH_DEFAULT = 24;
+        public static final int KEY_HEIGHT_DEFAULT = 24;
+        public static final int KEY_WIDTH = (int) (KEY_WIDTH_DEFAULT * Game.SCALE);
+        public static final int KEY_HEIGHT = (int) (KEY_HEIGHT_DEFAULT * Game.SCALE);
         public static int GetSpriteAmount(int object_type) {
 
             switch (object_type) {
@@ -62,7 +67,7 @@ public class Constant {
                     return 8;
                 case CANNON_LEFT, CANNON_RIGHT:
                     return 7;
-                case TREASURE_CHEST:
+                case TREASURE_CHEST, KEY:
                     return 8;
             }
             return 1;

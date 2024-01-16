@@ -76,7 +76,7 @@ public class HelpMethods {
 
         return list;
     }
-    public static ArrayList<Chest> GetChest(BufferedImage img) {
+    public static ArrayList<Chest> GetChests(BufferedImage img) {
         ArrayList<Chest> list = new ArrayList<>();
 
         for (int j = 0; j < img.getHeight(); j++)
@@ -87,6 +87,18 @@ public class HelpMethods {
                     list.add(new Chest(i * Game.TILES_SIZE, j * Game.TILES_SIZE, TREASURE_CHEST));
             }
         return list; 
+    }
+    public static ArrayList<Key> GetKeys(BufferedImage img) {
+        ArrayList<Key> list = new ArrayList<>();
+
+        for (int j = 0; j < img.getHeight(); j++)
+            for (int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getBlue();
+                if (value == KEY)
+                    list.add(new Key(i * Game.TILES_SIZE, j * Game.TILES_SIZE, KEY));
+            }
+        return list;
     }
     
     public static ArrayList<Cannon> GetCannons(BufferedImage img) {
@@ -209,8 +221,6 @@ public class HelpMethods {
         return true;
     }
 
-
-
     public static boolean IsSightClear(int[][] lvlData, Rectangle2D.Float enemyHitbox, Rectangle2D.Float playerHitbox, int yTile) {
         int firstXTile = (int) (enemyHitbox.x / Game.TILES_SIZE);
         int secondXTile;
@@ -243,5 +253,4 @@ public class HelpMethods {
                 return false;
         return true;
     }
-
 }

@@ -1,6 +1,5 @@
 package gameStates;
 
-import audio.AudioPlayer;
 import entities.*;
 import levels.LevelManager;
 import main.Game;
@@ -120,7 +119,7 @@ public class Playing extends State implements Statemethods{
                 isAnyActive = true;
             }
         }
-        for (Chest c : objectManager.getChest()) {
+        for (Chest c : objectManager.getChests()) {
             if (!c.isUnlocked()) {
                 isAnyLocked = true;
             }

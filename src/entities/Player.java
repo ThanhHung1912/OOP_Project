@@ -62,6 +62,7 @@ public class Player extends Entity {
     private int powerAttackTick;
     private int powerGrowSpeed = 15;
     private int powerGrowTick;
+    private int key = 0;
 
 
     public Player(int x, int y, int width, int height, Playing playing) {
@@ -420,7 +421,9 @@ public class Player extends Entity {
         return tileY;
     }
 
-
+    public int getKey() {
+        return key;
+    }
     public void powerAttack() {
         if(powerAttackActive){
             return;
@@ -429,5 +432,13 @@ public class Player extends Entity {
             powerAttackActive = true;
             changePower(-60);
         }
+    }
+
+    public void pickUpKey() {
+        key++;
+    }
+
+    public void useKey() {
+        key--;
     }
 }
