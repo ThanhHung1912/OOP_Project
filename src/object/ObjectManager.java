@@ -298,6 +298,9 @@ public class ObjectManager {
             c.reset();
             c.setUnlocked(false);
         }
+        for (Key k : keys) {
+            k.reset();
+        }
     }
     public ArrayList<Chest> getChests() {
         return chests;
