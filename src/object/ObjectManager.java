@@ -18,15 +18,18 @@ import static utilz.Constant.Projectiles.*;
 
 public class ObjectManager {
     private Playing playing;
+
     private BufferedImage[][] potionImgs, containerImgs;
     private BufferedImage[] cannonImgs;
+    private BufferedImage[] chestImgs;
+    private BufferedImage spikeImg, cannonBallImg;
+
     private ArrayList<Potion> potions;
     private ArrayList<GameContainer> containers;
     private ArrayList<Spike> spikes;
     private ArrayList<Cannon> cannons;
     private ArrayList<Projectile> projectiles = new ArrayList<>();
-
-    private BufferedImage spikeImg, cannonBallImg;
+    private ArrayList<Chest> chest;
 
     public ObjectManager(Playing playing) {
         this.playing = playing;
@@ -34,11 +37,6 @@ public class ObjectManager {
 
     }
 
-    public void checkSpikesTouched(Player p) {
-        for (Spike s : spikes)
-            if (s.getHitbox().intersects(p.getHitBox()))
-                p.dead();
-    }
     public void applyEffectToPlayer(Potion p) {
         if (p.getObjectType() == RED_POTION)
             playing.getPlayer().changeHealth(RED_POTION_VALUE);
@@ -64,14 +62,18 @@ public class ObjectManager {
         spikeImg = LoadSave.getSpriteAtlas(LoadSave.TRAP_ATLAS);
 
         cannonImgs = new BufferedImage[7];
-        BufferedImage temp = LoadSave.getSpriteAtlas(LoadSave.CANNON_ATLAS);
-
+        BufferedImage cannonSprites = LoadSave.getSpriteAtlas(LoadSave.CANNON_ATLAS);
         for (int i = 0; i < cannonImgs.length; i++) {
-            cannonImgs[i] = temp.getSubimage(i * 40, 0, 40, 26);
+            cannonImgs[i] = cannonSprites.getSubimage(i * 40, 0, 40, 26);
         }
 
         cannonBallImg = LoadSave.getSpriteAtlas(LoadSave.CANNON_BALL);
 
+        chestImgs = new BufferedImage[8];
+        BufferedImage chestSprites = LoadSave.getSpriteAtlas(LoadSave.TREASURE_CHEST);
+        for (int i = 0; i < chestImgs.length; i++) {
+            chestImgs[i] = chestSprites.getSubimage(i * 32, 0, 32, 32);
+        }
 
     }
 
@@ -84,6 +86,10 @@ public class ObjectManager {
             if (gc.isActive())
                 gc.update();
         }
+        for (Chest c : chest) {
+            if (c.isActive())
+                c.update();
+        }
         updateCannons(lvlData, player);
         updateProjectiles(lvlData, player);
 
@@ -95,8 +101,13 @@ public class ObjectManager {
         drawTraps(g, xLvlOffset);
         drawCannons(g, xLvlOffset);
         drawProjectiles(g, xLvlOffset);
+        drawChest(g, xLvlOffset);
     }
-
+    private void drawChest(Graphics g, int xLvlOffSet) {
+        for (Chest c : chest) {
+            g.drawImage(chestImgs[c.getAniIndex()], (int) (c.getHitbox().x - c.getxDrawOffSet() - xLvlOffSet), (int) (c.getHitbox().y - c.getyDrawOffSet()), TREASURE_CHEST_WIDTH, TREASURE_CHEST_HEIGHT, null);
+        }
+    }
     private void drawContainers(Graphics g, int xLvlOffset) {
         for (GameContainer gc : containers) {
             if (gc.isActive()) {
@@ -205,17 +216,22 @@ public class ObjectManager {
         containers = new ArrayList<>(newLevel.getContainers());
         spikes = newLevel.getSpikes();
         cannons = newLevel.getCannons();
+        chest = newLevel.getChest();
         projectiles.clear();
     }
-    public void checkObjectTouched(Rectangle2D.Float hitbox){
+    public void checkObjectTouched(Player player){
         for (Potion p: potions)
             if (p.isActive()){
-                if (hitbox.intersects(p.getHitbox())){
+                if (player.getHitBox().intersects(p.getHitbox())){
                     p.setActive(false);
                     applyEffectToPlayer(p);
                 }
             }
+        for (Spike s : spikes)
+            if (s.getHitbox().intersects(player.getHitBox()))
+                player.dead();
     }
+
     public void checkObjectHit(Rectangle2D.Float attackbox) {
         for (GameContainer gc : containers)
             if (gc.isActive() && !gc.doAnimation) {
@@ -241,6 +257,8 @@ public class ObjectManager {
         for (GameContainer gc : containers)
             gc.reset();
         for (Cannon c : cannons)
+            c.reset();
+        for (Chest c : chest) 
             c.reset();
     }
 }

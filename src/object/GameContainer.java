@@ -23,7 +23,7 @@ public class GameContainer extends GameObject{
             yDrawOffSet = (int)(5* Game.SCALE);
         }
         hitbox.y += yDrawOffSet + (int)(Game.SCALE *2);
-        hitbox.x += xDrawOffSet /2;
+        hitbox.x += xDrawOffSet / 2;
     }
 
     public void update(){

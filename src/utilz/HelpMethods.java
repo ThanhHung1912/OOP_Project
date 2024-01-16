@@ -76,7 +76,19 @@ public class HelpMethods {
 
         return list;
     }
+    public static ArrayList<Chest> GetChest(BufferedImage img) {
+        ArrayList<Chest> list = new ArrayList<>();
 
+        for (int j = 0; j < img.getHeight(); j++)
+            for (int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getBlue();
+                if (value == TREASURE_CHEST)
+                    list.add(new Chest(i * Game.TILES_SIZE, j * Game.TILES_SIZE, TREASURE_CHEST));
+            }
+        return list; 
+    }
+    
     public static ArrayList<Cannon> GetCannons(BufferedImage img) {
         ArrayList<Cannon> list = new ArrayList<>();
 
@@ -231,10 +243,5 @@ public class HelpMethods {
                 return false;
         return true;
     }
-
-
-
-
-
 
 }

@@ -142,9 +142,9 @@ public class Playing extends State implements Statemethods{
         drawClouds(g);
 
         levelManager.draw(g, xLvlOffset);
-        player.render(g, xLvlOffset);
         enemyManager.draw(g, xLvlOffset);
         objectManager.draw (g, xLvlOffset);
+        player.render(g, xLvlOffset);
 
         if (paused) {
             g.setColor(new Color(0, 0, 0, 150));
@@ -304,13 +304,9 @@ public class Playing extends State implements Statemethods{
     public ObjectManager getObjectManager(){
         return objectManager;
     }
-    public void checkPotionTouch(Rectangle2D.Float hitbox){
-        objectManager.checkObjectTouched(hitbox);
 
-    }
-
-    public void checkSpikesTouched(Player p) {
-        objectManager.checkSpikesTouched(p);
+    public void checkObjectTouched(Player p) {
+        objectManager.checkObjectTouched(p);
     }
     public void checkObjectHit(Rectangle2D.Float attackbox){
         objectManager.checkObjectHit(attackbox);

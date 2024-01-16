@@ -134,8 +134,7 @@ public class Player extends Entity {
 
         updatePos();
         if (isMoving) {
-            checkPotionTouched();
-            checkSpikesTouched();
+            checkObjectTouched();
             tileY = (int) (hitBox.y / Game.TILES_SIZE);
             if(powerAttackActive){
                 powerAttackTick++;
@@ -153,13 +152,8 @@ public class Player extends Entity {
         updateAnimation();
     }
 
-    private void checkSpikesTouched() {
-        playing.checkSpikesTouched(this);
-
-    }
-
-    private void checkPotionTouched() {
-        playing.checkPotionTouch(hitBox);
+    private void checkObjectTouched() {
+        playing.checkObjectTouched(this);
     }
 
     private void checkAttack() {

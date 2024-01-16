@@ -14,11 +14,12 @@ import static utilz.HelpMethods.*;
 public class Level {
     private BufferedImage img;
     private int[][] lvlData;
-    private  ArrayList<Crabby> crabs;
-    private  ArrayList<GameContainer> containers;
-    private  ArrayList<Potion> potions;
+    private ArrayList<Crabby> crabs;
+    private ArrayList<GameContainer> containers;
+    private ArrayList<Potion> potions;
     private ArrayList<Spike> spikes;
     private ArrayList<Cannon> cannons;
+    private ArrayList<Chest> chest;
     private int lvlTilesWide;
     private int maxTilesOffset;
     private int maxLvlOffsetX;
@@ -33,6 +34,7 @@ public class Level {
         createContainers();
         createSpikes();
         createCannons();
+        createChest();
         calcLvlOffset();
         calcPlayerSpawn();
     }
@@ -64,7 +66,9 @@ public class Level {
     private void createSpikes() {
         spikes = HelpMethods.GetSpikes(img);
     }
-
+    private void createChest() {
+        chest = HelpMethods.GetChest(img);
+    }
     private void createLevelData() {
         lvlData = GetLevelData(img);
     }
@@ -92,5 +96,8 @@ public class Level {
     }
     public ArrayList<Cannon> getCannons(){
         return cannons;
+    }
+    public ArrayList<Chest> getChest() {
+        return chest;
     }
 }

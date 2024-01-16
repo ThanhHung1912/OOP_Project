@@ -41,14 +41,14 @@ public class GameObject {
         aniIndex = 0;
         aniTick = 0;
         active = true;
-        if (objectType == BARREL||objectType == BOX || objectType == CANNON_LEFT || objectType == CANNON_RIGHT){
+        if (objectType == BARREL||objectType == BOX || objectType == CANNON_LEFT || objectType == CANNON_RIGHT || objectType == TREASURE_CHEST){
             doAnimation = false;
         }
         else{
         doAnimation = true;}
     }
     protected void initHitbox (int width, int height){
-        hitbox = new Rectangle2D.Float(x,y,(int)(width* Game.SCALE), (int)(height*Game.SCALE));
+        hitbox = new Rectangle2D.Float(x, y, (int)(width* Game.SCALE), (int)(height*Game.SCALE));
     }
     public void drawHitbox (Graphics g, int xLvlOffSet){
         g.setColor(Color.PINK);
