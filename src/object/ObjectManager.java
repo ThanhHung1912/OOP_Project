@@ -105,7 +105,8 @@ public class ObjectManager {
     }
     private void drawChest(Graphics g, int xLvlOffSet) {
         for (Chest c : chest) {
-            g.drawImage(chestImgs[c.getAniIndex()], (int) (c.getHitbox().x - c.getxDrawOffSet() - xLvlOffSet), (int) (c.getHitbox().y - c.getyDrawOffSet()), TREASURE_CHEST_WIDTH, TREASURE_CHEST_HEIGHT, null);
+            if (c.isActive())
+                g.drawImage(chestImgs[c.getAniIndex()], (int) (c.getHitbox().x - c.getxDrawOffSet() - xLvlOffSet), (int) (c.getHitbox().y - c.getyDrawOffSet()), TREASURE_CHEST_WIDTH, TREASURE_CHEST_HEIGHT, null);
         }
     }
     private void drawContainers(Graphics g, int xLvlOffset) {
@@ -230,6 +231,11 @@ public class ObjectManager {
         for (Spike s : spikes)
             if (s.getHitbox().intersects(player.getHitBox()))
                 player.dead();
+        for (Chest c : chest) {
+            if (c.getHitbox().intersects(player.getHitBox())) {
+                c.doAnimation = true;
+            }
+        }
     }
 
     public void checkObjectHit(Rectangle2D.Float attackbox) {
@@ -248,8 +254,6 @@ public class ObjectManager {
             }
     }
 
-
-
     public void resetAllObject(){
         loadObjects(playing.getLevelManager().getCurrentLevel());
         for (Potion p: potions)
@@ -258,7 +262,12 @@ public class ObjectManager {
             gc.reset();
         for (Cannon c : cannons)
             c.reset();
-        for (Chest c : chest) 
+        for (Chest c : chest) {
             c.reset();
+            c.setUnlocked(false);
+        }
+    }
+    public ArrayList<Chest> getChest() {
+        return chest;
     }
 }

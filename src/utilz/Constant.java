@@ -18,12 +18,12 @@ public class Constant {
     public static class ObjectConstant {
         public static final int RED_POTION = 0;
         public static final int BLUE_POTION = 1;
-        public static final int BARREL = 2;
+        public static final int BARREL = 7;
         public static final int BOX = 3;
         public static final int SPIKE = 4;
         public static final int CANNON_LEFT = 5;
         public static final int CANNON_RIGHT = 6;
-        public static final int TREASURE_CHEST = 7;
+        public static final int TREASURE_CHEST = 2;
 
         public static final int RED_POTION_VALUE = 15;//HEALTH
         public static final int BLUE_POTION_VALUE = 10;//POWER
@@ -62,6 +62,8 @@ public class Constant {
                     return 8;
                 case CANNON_LEFT, CANNON_RIGHT:
                     return 7;
+                case TREASURE_CHEST:
+                    return 8;
             }
             return 1;
         }

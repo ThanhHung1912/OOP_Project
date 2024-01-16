@@ -5,8 +5,6 @@ import main.Game;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-import static main.Game.UPS;
-import static utilz.Constant.ANIMATION_PER_SECOND;
 import static utilz.Constant.ObjectConstant.*;
 import static utilz.Constant.TICKS_PER_ANI;
 
@@ -27,13 +25,18 @@ public class GameObject {
             aniTick = 0;
             aniIndex++;
             if (aniIndex >= GetSpriteAmount(objectType)) {
-                aniIndex = 0;
                 if (objectType == BARREL||objectType == BOX){
                     doAnimation = false;
                     active = false;
+                    aniIndex = 0;
                 } else if (objectType == CANNON_LEFT || objectType == CANNON_RIGHT) {
                     doAnimation = false;
-                }
+                    aniIndex = 0;
+                } else if (objectType == TREASURE_CHEST) {
+                    doAnimation = false;
+                    aniIndex--;
+                } else if (objectType == BLUE_POTION || objectType == RED_POTION)
+                    aniIndex = 0;
             }
         }
     }

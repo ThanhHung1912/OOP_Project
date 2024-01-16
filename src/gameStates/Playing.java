@@ -14,6 +14,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import object.Chest;
 import object.ObjectManager;
 import ui.GameOverOverlay;
 import ui.LevelCompletedOverlay;
@@ -103,13 +104,32 @@ public class Playing extends State implements Statemethods{
             player.update();
         }
         else if (!gameOver) {
-            levelManager.update();
+            checkLevelCompleted();
             objectManager.update(levelManager.getCurrentLevel().getLvlData(), player);
             player.update();
             enemyManager.update(levelManager.getCurrentLevel().getLvlData(), player);
             checkCloseToBorder();
         }
     }
+
+    private void checkLevelCompleted() {
+        boolean isAnyActive = false;
+        boolean isAnyLocked = false;
+        for (Crabby c : enemyManager.getCrabbies()) {
+            if (c.isActive()) {
+                isAnyActive = true;
+            }
+        }
+        for (Chest c : objectManager.getChest()) {
+            if (!c.isUnlocked()) {
+                isAnyLocked = true;
+            }
+        }
+        if (!isAnyActive && !isAnyLocked) {
+            lvlCompleted = true;
+        }
+    }
+
     private void checkCloseToBorder() {
         int playerX = (int) player.getHitBox().x;
         int diff = playerX - xLvlOffset;

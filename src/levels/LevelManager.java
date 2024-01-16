@@ -42,9 +42,6 @@ public class LevelManager {
         }
     }
 
-    public void update() {
-
-    }
     public void draw(Graphics g, int lvlOffset) {
         for (int i = 0; i < Game.TILES_IN_HEIGHT; i++) {
             for (int j = 0; j < levels.get(lvlIndex).getLvlData()[0].length; j++) {
