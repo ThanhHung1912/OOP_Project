@@ -60,7 +60,7 @@ public class Crabby extends Enemy{
                         attackChecked = false;
 
                     if (aniIndex == 3 && !attackChecked)
-                        checkPlayerHit(attackBox, player);
+                        checkPlayerHit(player);
 
                     break;
                 case HIT:

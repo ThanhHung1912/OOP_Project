@@ -15,6 +15,7 @@ import gameStates.Playing;
 
 import static main.Game.SCALE;
 import static utilz.Constant.*;
+import static utilz.Constant.Directions.RIGHT;
 import static utilz.Constant.ObjectConstant.*;
 import static utilz.Constant.PlayerConstants.*;
 import static utilz.Constant.Projectiles.CANNON_BALL_DAMAGE;
@@ -28,11 +29,15 @@ public class Player extends Entity implements ObjectObserver {
     private boolean left, right, jump;
     private boolean isMoving = false;
     private boolean attacking = false;
+    private boolean hit = false;
 
     private float xDrawOffset = 21 * SCALE;
     private float yDrawOffset = 4 * SCALE;
 
-
+    private float xSpeed = 0;
+    //Knockback when hit
+    private float knockBackXSpeed = 2f * SCALE;
+    private float knockBackYSpeed = -1.25f * SCALE;
     // Applying Gravity
     private float jumpSpeed = -2.25f * SCALE;
 
@@ -224,27 +229,42 @@ public class Player extends Entity implements ObjectObserver {
         if (jump)
             jump();
 
-        if (!inAir)
+        if (!inAir && !hit)
             if(!powerAttackActive) {
                 if ((!left && !right) || (right && left))
                     return;
             }
-        float xSpeed = 0;
 
-        if (left && !right) {
-            xSpeed -= walkSpeed;
-            flipX = width;
-            flipW = -1;
+        if (!hit) {
+            xSpeed = 0;
+            if (left && !right) {
+                xSpeed -= walkSpeed;
+                flipX = width;
+                flipW = -1;
+            }
+            if (right && !left) {
+                xSpeed += walkSpeed;
+                flipX = 0;
+                flipW = 1;
+            }
         }
-        if (right && !left) {
-            xSpeed += walkSpeed;
-            flipX = 0;
-            flipW = 1;
+        else {
+            if (xSpeed > 0) {
+                xSpeed -= (float) (0.05 * knockBackXSpeed);
+                if (xSpeed <= 0) {
+                    xSpeed = 0;
+                }
+            }
+            if (xSpeed < 0) {
+                xSpeed += (float) (0.05 * knockBackXSpeed);
+                if (xSpeed >= 0) {
+                    xSpeed = 0;
+                }
+            }
         }
-
         if(powerAttackActive){
             if((!left && !right) || (left && right)){
-                if(flipW == -1){
+                if(flipW == - 1){
                     xSpeed = -walkSpeed;
                 } else {
                     xSpeed = walkSpeed;
@@ -274,6 +294,7 @@ public class Player extends Entity implements ObjectObserver {
             updateXPos(xSpeed);
         isMoving = true;
     }
+
 
     private void updateXPos(float xSpeed) {
         if(CanMoveHere(hitBox.x + xSpeed, hitBox.y, hitBox.width, hitBox.height, lvlData)) {
@@ -315,6 +336,14 @@ public class Player extends Entity implements ObjectObserver {
                 state = FALLING;
             }
         }
+        if (hit) {
+            state = HIT;
+            if (last_action != HIT) {
+                aniTick = 0;
+                aniIndex = 0;
+            }
+            return;
+        }
 
         if(powerAttackActive){
             state = ATTACK;
@@ -347,6 +376,7 @@ public class Player extends Entity implements ObjectObserver {
                 aniIndex = 0;
                 attacking = false;
                 attackChecked = false;
+                hit = false;
             }
         }
     }
@@ -370,8 +400,6 @@ public class Player extends Entity implements ObjectObserver {
         currentHealth = 0;
 
     }
-
-
     public void changeHealth (int value){
         currentHealth += value;
 
@@ -429,18 +457,30 @@ public class Player extends Entity implements ObjectObserver {
         if(powerAttackActive){
             return;
         }
-        if(powerValue >= 60){
+        if(powerValue >= 60 && !hit){
             powerAttackActive = true;
             changePower(-60);
         }
     }
-
     public void pickUpKey() {
         key++;
     }
 
     public void useKey() {
         key--;
+    }
+    public void setHit(int dir) {
+        hit = true;
+        airSpeed = knockBackYSpeed;
+        inAir = true;
+
+        System.out.println(dir);
+        if (dir == RIGHT) {
+            xSpeed = knockBackXSpeed;
+        }
+        else {
+            xSpeed = - knockBackXSpeed;
+        }
     }
 
     @Override
@@ -461,8 +501,14 @@ public class Player extends Entity implements ObjectObserver {
             case KEY:
                 pickUpKey();
                 break;
+        }
+    }
+    @Override
+    public void updateObjectEffect(int objectType, int dir) {
+        switch (objectType) {
             case CANNON_BALL:
                 changeHealth(-CANNON_BALL_DAMAGE);
+                setHit(dir);
                 break;
         }
     }

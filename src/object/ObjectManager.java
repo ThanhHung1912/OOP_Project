@@ -13,6 +13,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import static utilz.Constant.Directions.LEFT;
+import static utilz.Constant.Directions.RIGHT;
 import static utilz.Constant.ObjectConstant.*;
 import static utilz.HelpMethods.CanCannonSeePlayer;
 import static utilz.HelpMethods.IsProjectileHittingLevel;
@@ -215,9 +217,9 @@ public class ObjectManager implements PlayerObserver {
     }
 
     private void shootCannon(Cannon c) {
-        int dir = 1;
+        int dir = RIGHT;
         if (c.getObjectType() == CANNON_LEFT)
-            dir = -1;
+            dir = LEFT;
 
         projectiles.add(new Projectile((int) c.getHitbox().x, (int) c.getHitbox().y, CANNON_BALL, dir));
 
@@ -284,10 +286,11 @@ public class ObjectManager implements PlayerObserver {
                 }
             }
         }
-        for (Projectile p: projectiles) {
+        for (Projectile p : projectiles) {
             if (p.isActive()) {
                 if (p.getHitbox().intersects(player.getHitBox())) {
-                    notifyObserver(CANNON_BALL);
+                    int dir = p.getDir();
+                    notifyObserver(CANNON_BALL, dir);
                     p.setActive(false);
                 }
             }
@@ -331,9 +334,14 @@ public class ObjectManager implements PlayerObserver {
     public void attachObserver(ObjectObserver o) {
         observers.add(o);
     }
-    public void notifyObserver(int objectType) {
+    public void notifyObserver(int dir) {
         for (ObjectObserver o : observers) {
-            o.updateObjectEffect(objectType);
+            o.updateObjectEffect(dir);
+        }
+    }
+    public void notifyObserver(int objectType, int dir) {
+        for (ObjectObserver o : observers) {
+            o.updateObjectEffect(objectType, dir);
         }
     }
 
