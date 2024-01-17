@@ -1,9 +1,11 @@
 package gameStates;
 
+import Observer.ObjectObserver;
 import entities.*;
 import levels.LevelManager;
 import main.Game;
 import static utilz.Constant.Environment.*;
+import static utilz.Constant.ObjectConstant.PLATFORM;
 
 
 import java.awt.*;
@@ -20,7 +22,7 @@ import ui.LevelCompletedOverlay;
 import ui.PauseOverlay;
 import utilz.LoadSave;
 
-public class Playing extends State implements Statemethods{
+public class Playing extends State implements Statemethods, ObjectObserver {
     private Player player;
     private LevelManager levelManager;
     private EnemyManager enemyManager;
@@ -81,6 +83,7 @@ public class Playing extends State implements Statemethods{
 
     private void addObserver() {
         objectManager.attachObserver(player);
+        objectManager.attachObserver(this);
         player.attachObserver(objectManager);
         player.attachObserver(enemyManager);
     }
@@ -113,7 +116,6 @@ public class Playing extends State implements Statemethods{
             player.update();
         }
         else if (!gameOver) {
-            checkLevelCompleted();
             objectManager.update(levelManager.getCurrentLevel().getLvlData(), player);
             player.update();
             enemyManager.update(levelManager.getCurrentLevel().getLvlData(), player);
@@ -329,5 +331,17 @@ public class Playing extends State implements Statemethods{
 
     public void setPlayerDying(boolean playerDying){
         this.playerDying = playerDying;
+    }
+
+    @Override
+    public void updateObjectEffect(int objectType, int dir) {
+
+    }
+
+    @Override
+    public void updateObjectEffect(int objectType) {
+        if (objectType == PLATFORM) {
+            checkLevelCompleted();
+        }
     }
 }

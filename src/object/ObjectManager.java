@@ -303,7 +303,6 @@ public class ObjectManager implements PlayerObserver {
         for (Spike s : spikes)
             if (s.getHitbox().intersects(player.getHitBox())) {
                 notifyObserver(SPIKE);
-
             }
         for (Chest c : chests) {
             if (c.getHitbox().intersects(player.getHitBox())) {
@@ -330,6 +329,10 @@ public class ObjectManager implements PlayerObserver {
                 }
             }
         }
+        for (FlagPlatform p : platforms)
+            if (p.getHitbox().intersects(player.getHitBox())) {
+                notifyObserver(PLATFORM);
+            }
     }
     public void checkObjectHit(Rectangle2D.Float attackbox) {
         for (GameContainer gc : containers)
@@ -375,9 +378,9 @@ public class ObjectManager implements PlayerObserver {
     public void attachObserver(ObjectObserver o) {
         observers.add(o);
     }
-    public void notifyObserver(int dir) {
+    public void notifyObserver(int objectType) {
         for (ObjectObserver o : observers) {
-            o.updateObjectEffect(dir);
+            o.updateObjectEffect(objectType);
         }
     }
     public void notifyObserver(int objectType, int dir) {
