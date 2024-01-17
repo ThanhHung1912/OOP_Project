@@ -18,15 +18,21 @@ import static utilz.Constant.Projectiles.*;
 
 public class ObjectManager {
     private Playing playing;
+
     private BufferedImage[][] potionImgs, containerImgs;
     private BufferedImage[] cannonImgs;
+    private BufferedImage[] chestImgs;
+    private BufferedImage[] keyImgs;
+    private BufferedImage spikeImg, cannonBallImg, padlockImg;
+
     private ArrayList<Potion> potions;
     private ArrayList<GameContainer> containers;
     private ArrayList<Spike> spikes;
     private ArrayList<Cannon> cannons;
     private ArrayList<Projectile> projectiles = new ArrayList<>();
-
-    private BufferedImage spikeImg, cannonBallImg;
+    private ArrayList<Chest> chests;
+    private ArrayList<Key> keys;
+    private ArrayList<Padlock> padlocks = new ArrayList<>();
 
     public ObjectManager(Playing playing) {
         this.playing = playing;
@@ -34,22 +40,9 @@ public class ObjectManager {
 
     }
 
-    public void checkSpikesTouched(Player p) {
-        for (Spike s : spikes)
-            if (s.getHitbox().intersects(p.getHitBox()))
-                p.dead();
-    }
-    public void applyEffectToPlayer(Potion p) {
-        if (p.getObjectType() == RED_POTION)
-            playing.getPlayer().changeHealth(RED_POTION_VALUE);
-        else
-            playing.getPlayer().changePower(BLUE_POTION_VALUE);
-    }
-
     private void loadImgs() {
         BufferedImage potionSprite = LoadSave.getSpriteAtlas(LoadSave.POTION_ATLAS);
         potionImgs = new BufferedImage[2][7];
-
         for (int j = 0; j < potionImgs.length; j++)
             for (int i = 0; i < potionImgs[j].length; i++)
                 potionImgs[j][i] = potionSprite.getSubimage(12 * i, 16 * j, 12, 16);
@@ -64,15 +57,26 @@ public class ObjectManager {
         spikeImg = LoadSave.getSpriteAtlas(LoadSave.TRAP_ATLAS);
 
         cannonImgs = new BufferedImage[7];
-        BufferedImage temp = LoadSave.getSpriteAtlas(LoadSave.CANNON_ATLAS);
-
+        BufferedImage cannonSprites = LoadSave.getSpriteAtlas(LoadSave.CANNON_ATLAS);
         for (int i = 0; i < cannonImgs.length; i++) {
-            cannonImgs[i] = temp.getSubimage(i * 40, 0, 40, 26);
+            cannonImgs[i] = cannonSprites.getSubimage(i * 40, 0, 40, 26);
         }
 
         cannonBallImg = LoadSave.getSpriteAtlas(LoadSave.CANNON_BALL);
 
+        chestImgs = new BufferedImage[8];
+        BufferedImage chestSprites = LoadSave.getSpriteAtlas(LoadSave.TREASURE_CHEST);
+        for (int i = 0; i < chestImgs.length; i++) {
+            chestImgs[i] = chestSprites.getSubimage(i * 32, 0, 32, 32);
+        }
 
+        keyImgs = new BufferedImage[8];
+        BufferedImage keySprites = LoadSave.getSpriteAtlas(LoadSave.KEY);
+        for (int i = 0; i < keyImgs.length; i++) {
+            keyImgs[i] = keySprites.getSubimage(i * 24, 0, 24, 24);
+        }
+
+        padlockImg = LoadSave.getSpriteAtlas(LoadSave.PADLOCK);
     }
 
     public void update(int[][] lvlData, Player player) {
@@ -83,6 +87,24 @@ public class ObjectManager {
         for (GameContainer gc : containers) {
             if (gc.isActive())
                 gc.update();
+        }
+        for (Chest c : chests) {
+            if (c.isActive()) {
+                c.update();
+                if (c.getAniIndex() == 1 && c.getAniTick() == 0) {
+                    padlocks.add(new Padlock((int) (c.getHitbox().x + 8 * Game.SCALE), (int) (c.getHitbox().y - 10 * Game.SCALE), PADLOCK));
+                }
+            }
+        }
+        for (Key k : keys) {
+            if (k.isActive()) {
+                k.update();
+            }
+        }
+        for (Padlock p : padlocks) {
+            if (p.isActive()) {
+                p.update(lvlData);
+            }
         }
         updateCannons(lvlData, player);
         updateProjectiles(lvlData, player);
@@ -95,8 +117,33 @@ public class ObjectManager {
         drawTraps(g, xLvlOffset);
         drawCannons(g, xLvlOffset);
         drawProjectiles(g, xLvlOffset);
+        drawChests(g, xLvlOffset);
+        drawKeys(g, xLvlOffset);
+        drawPadlocks(g, xLvlOffset);
     }
 
+    private void drawPadlocks(Graphics g, int xLvlOffset) {
+        for (Padlock p : padlocks) {
+            if (p.isActive()) {
+                g.drawImage(padlockImg, (int) (p.getHitbox().x - p.getxDrawOffSet() - xLvlOffset), (int) (p.getHitbox().y - p.getyDrawOffSet()), PADLOCK_WIDTH, PADLOCK_HEIGHT, null);
+            }
+        }
+    }
+
+    private void drawKeys(Graphics g, int xLvlOffset) {
+        for (Key k : keys) {
+            if (k.isActive()) {
+                g.drawImage(keyImgs[k.getAniIndex()], (int) (k.getHitbox().x - k.getxDrawOffSet() - xLvlOffset), (int) (k.getHitbox().y - k.getyDrawOffSet()), KEY_WIDTH, KEY_HEIGHT, null);
+            }
+        }
+    }
+
+    private void drawChests(Graphics g, int xLvlOffset) {
+        for (Chest c : chests) {
+            if (c.isActive())
+                g.drawImage(chestImgs[c.getAniIndex()], (int) (c.getHitbox().x - c.getxDrawOffSet() - xLvlOffset), (int) (c.getHitbox().y - c.getyDrawOffSet()), TREASURE_CHEST_WIDTH, TREASURE_CHEST_HEIGHT, null);
+        }
+    }
     private void drawContainers(Graphics g, int xLvlOffset) {
         for (GameContainer gc : containers) {
             if (gc.isActive()) {
@@ -121,7 +168,6 @@ public class ObjectManager {
             }
         }
     }
-
     private void drawTraps(Graphics g, int xLvlOffset) {
         for (Spike s : spikes)
             g.drawImage(spikeImg, (int) (s.getHitbox().x - xLvlOffset), (int) (s.getHitbox().y - s.getyDrawOffSet()), SPIKE_WIDTH, SPIKE_HEIGHT, null);
@@ -205,17 +251,47 @@ public class ObjectManager {
         containers = new ArrayList<>(newLevel.getContainers());
         spikes = newLevel.getSpikes();
         cannons = newLevel.getCannons();
+        chests = newLevel.getChests();
+        keys = newLevel.getKeys();
         projectiles.clear();
+        padlocks.clear();
     }
-    public void checkObjectTouched(Rectangle2D.Float hitbox){
-        for (Potion p: potions)
+    public void checkObjectTouched(Player player){
+        for (Potion p : potions)
             if (p.isActive()){
-                if (hitbox.intersects(p.getHitbox())){
+                if (player.getHitBox().intersects(p.getHitbox())){
                     p.setActive(false);
                     applyEffectToPlayer(p);
                 }
             }
+        for (Spike s : spikes)
+            if (s.getHitbox().intersects(player.getHitBox()))
+                player.dead();
+        for (Chest c : chests) {
+            if (c.getHitbox().intersects(player.getHitBox())) {
+                if (player.getKey() > 0) {
+                    player.useKey();
+                    c.doAnimation = true;
+                }
+            }
+        }
+        for (Key k : keys) {
+            if (k.isActive()) {
+                if (player.getHitBox().intersects(k.getHitbox())) {
+                    k.setActive(false);
+                    player.pickUpKey();
+
+                }
+            }
+        }
     }
+    public void applyEffectToPlayer(Potion p) {
+        if (p.getObjectType() == RED_POTION)
+            playing.getPlayer().changeHealth(RED_POTION_VALUE);
+        else
+            playing.getPlayer().changePower(BLUE_POTION_VALUE);
+    }
+
     public void checkObjectHit(Rectangle2D.Float attackbox) {
         for (GameContainer gc : containers)
             if (gc.isActive() && !gc.doAnimation) {
@@ -232,8 +308,6 @@ public class ObjectManager {
             }
     }
 
-
-
     public void resetAllObject(){
         loadObjects(playing.getLevelManager().getCurrentLevel());
         for (Potion p: potions)
@@ -242,5 +316,15 @@ public class ObjectManager {
             gc.reset();
         for (Cannon c : cannons)
             c.reset();
+        for (Chest c : chests) {
+            c.reset();
+            c.setUnlocked(false);
+        }
+        for (Key k : keys) {
+            k.reset();
+        }
+    }
+    public ArrayList<Chest> getChests() {
+        return chests;
     }
 }

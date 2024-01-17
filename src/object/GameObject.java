@@ -5,8 +5,6 @@ import main.Game;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-import static main.Game.UPS;
-import static utilz.Constant.ANIMATION_PER_SECOND;
 import static utilz.Constant.ObjectConstant.*;
 import static utilz.Constant.TICKS_PER_ANI;
 
@@ -27,12 +25,21 @@ public class GameObject {
             aniTick = 0;
             aniIndex++;
             if (aniIndex >= GetSpriteAmount(objectType)) {
-                aniIndex = 0;
-                if (objectType == BARREL||objectType == BOX){
+                if (objectType == BARREL || objectType == BOX){
                     doAnimation = false;
                     active = false;
-                } else if (objectType == CANNON_LEFT || objectType == CANNON_RIGHT) {
+                    aniIndex = 0;
+                }
+                else if (objectType == CANNON_LEFT || objectType == CANNON_RIGHT) {
                     doAnimation = false;
+                    aniIndex = 0;
+                }
+                else if (objectType == TREASURE_CHEST) {
+                    doAnimation = false;
+                    aniIndex--;
+                }
+                else if (objectType == BLUE_POTION || objectType == RED_POTION || objectType == KEY) {
+                    aniIndex = 0;
                 }
             }
         }
@@ -41,14 +48,14 @@ public class GameObject {
         aniIndex = 0;
         aniTick = 0;
         active = true;
-        if (objectType == BARREL||objectType == BOX || objectType == CANNON_LEFT || objectType == CANNON_RIGHT){
+        if (objectType == BARREL||objectType == BOX || objectType == CANNON_LEFT || objectType == CANNON_RIGHT || objectType == TREASURE_CHEST){
             doAnimation = false;
         }
         else{
         doAnimation = true;}
     }
     protected void initHitbox (int width, int height){
-        hitbox = new Rectangle2D.Float(x,y,(int)(width* Game.SCALE), (int)(height*Game.SCALE));
+        hitbox = new Rectangle2D.Float(x, y, (int)(width* Game.SCALE), (int)(height*Game.SCALE));
     }
     public void drawHitbox (Graphics g, int xLvlOffSet){
         g.setColor(Color.PINK);

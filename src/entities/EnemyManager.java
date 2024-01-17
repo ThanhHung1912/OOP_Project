@@ -24,17 +24,11 @@ public class EnemyManager {
     }
 
     public void update(int[][] lvlData, Player player) {
-        boolean isAnyActive = false;
         for (Crabby c : crabbies) {
             if (c.isActive()) {
-                isAnyActive = true;
                 c.update(lvlData, player);
             }
         }
-        if (!isAnyActive) {
-            playing.setLevelCompleted(true);
-        }
-
     }
 
     public void draw(Graphics g, int xLvlOffset) {
@@ -77,6 +71,8 @@ public class EnemyManager {
         for (Crabby c : crabbies) {
             c.resetEnemy();
         }
-
+    }
+    public ArrayList<Crabby> getCrabbies() {
+        return crabbies;
     }
 }

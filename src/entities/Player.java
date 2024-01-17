@@ -62,6 +62,7 @@ public class Player extends Entity {
     private int powerAttackTick;
     private int powerGrowSpeed = 15;
     private int powerGrowTick;
+    private int key = 0;
 
 
     public Player(int x, int y, int width, int height, Playing playing) {
@@ -134,8 +135,7 @@ public class Player extends Entity {
 
         updatePos();
         if (isMoving) {
-            checkPotionTouched();
-            checkSpikesTouched();
+            checkObjectTouched();
             tileY = (int) (hitBox.y / Game.TILES_SIZE);
             if(powerAttackActive){
                 powerAttackTick++;
@@ -153,13 +153,8 @@ public class Player extends Entity {
         updateAnimation();
     }
 
-    private void checkSpikesTouched() {
-        playing.checkSpikesTouched(this);
-
-    }
-
-    private void checkPotionTouched() {
-        playing.checkPotionTouch(hitBox);
+    private void checkObjectTouched() {
+        playing.checkObjectTouched(this);
     }
 
     private void checkAttack() {
@@ -409,6 +404,8 @@ public class Player extends Entity {
         hitBox.x = x;
         hitBox.y = y;
 
+        key = 0;
+
         resetAttackBox();
 
         if (!IsEntityOnFloor(hitBox, lvlData))
@@ -426,7 +423,9 @@ public class Player extends Entity {
         return tileY;
     }
 
-
+    public int getKey() {
+        return key;
+    }
     public void powerAttack() {
         if(powerAttackActive){
             return;
@@ -435,5 +434,13 @@ public class Player extends Entity {
             powerAttackActive = true;
             changePower(-60);
         }
+    }
+
+    public void pickUpKey() {
+        key++;
+    }
+
+    public void useKey() {
+        key--;
     }
 }

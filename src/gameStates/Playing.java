@@ -1,6 +1,5 @@
 package gameStates;
 
-import audio.AudioPlayer;
 import entities.*;
 import levels.LevelManager;
 import main.Game;
@@ -14,6 +13,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+import object.Chest;
 import object.ObjectManager;
 import ui.GameOverOverlay;
 import ui.LevelCompletedOverlay;
@@ -103,13 +103,32 @@ public class Playing extends State implements Statemethods{
             player.update();
         }
         else if (!gameOver) {
-            levelManager.update();
+            checkLevelCompleted();
             objectManager.update(levelManager.getCurrentLevel().getLvlData(), player);
             player.update();
             enemyManager.update(levelManager.getCurrentLevel().getLvlData(), player);
             checkCloseToBorder();
         }
     }
+
+    private void checkLevelCompleted() {
+        boolean isAnyActive = false;
+        boolean isAnyLocked = false;
+        for (Crabby c : enemyManager.getCrabbies()) {
+            if (c.isActive()) {
+                isAnyActive = true;
+            }
+        }
+        for (Chest c : objectManager.getChests()) {
+            if (!c.isUnlocked()) {
+                isAnyLocked = true;
+            }
+        }
+        if (!isAnyActive && !isAnyLocked) {
+            lvlCompleted = true;
+        }
+    }
+
     private void checkCloseToBorder() {
         int playerX = (int) player.getHitBox().x;
         int diff = playerX - xLvlOffset;
@@ -142,9 +161,9 @@ public class Playing extends State implements Statemethods{
         drawClouds(g);
 
         levelManager.draw(g, xLvlOffset);
-        player.render(g, xLvlOffset);
         enemyManager.draw(g, xLvlOffset);
         objectManager.draw (g, xLvlOffset);
+        player.render(g, xLvlOffset);
 
         if (paused) {
             g.setColor(new Color(0, 0, 0, 150));
@@ -304,13 +323,9 @@ public class Playing extends State implements Statemethods{
     public ObjectManager getObjectManager(){
         return objectManager;
     }
-    public void checkPotionTouch(Rectangle2D.Float hitbox){
-        objectManager.checkObjectTouched(hitbox);
 
-    }
-
-    public void checkSpikesTouched(Player p) {
-        objectManager.checkSpikesTouched(p);
+    public void checkObjectTouched(Player p) {
+        objectManager.checkObjectTouched(p);
     }
     public void checkObjectHit(Rectangle2D.Float attackbox){
         objectManager.checkObjectHit(attackbox);

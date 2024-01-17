@@ -22,7 +22,6 @@ public class LoadSave {
 
     public static final String PLAYER_ATLAS = "player_sprites.png";
     public static final String LEVEL_ATLAS = "outside_sprites.png";
-    public static final String LEVEL_DATA = "level_one_data_long.png";
     public static final String MENU_BUTTONS = "button_atlas.png";
     public static final String MENU_BACKGROUND = "menu_background.png";
     public static final String BACKGROUND_OF_MENU = "background_of_menu.png";
@@ -41,6 +40,9 @@ public class LoadSave {
     public static final String TRAP_ATLAS = "trap_atlas.png";
     public static final String CANNON_ATLAS = "cannon_atlas.png";
     public static final String CANNON_BALL = "ball.png";
+    public static final String TREASURE_CHEST = "chest_sprites.png";
+    public static final String KEY = "key_sprites.png";
+    public static final String PADLOCK = "padlock.png";
     public static final String DEATH_SCREEN = "death_screen.png";
     public static final String OPTIONS_MENU = "options_background.png";
     public static BufferedImage getSpriteAtlas(String fileName) {
