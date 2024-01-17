@@ -20,7 +20,7 @@ public class Chest extends GameObject {
     public void update() {
         if (doAnimation) {
             updateAnimationTick();
-            if (aniIndex == GetSpriteAmount(TREASURE_CHEST) - 1) {
+            if (aniIndex == GetObjectSpriteAmount(TREASURE_CHEST) - 1) {
                 isUnlocked = true;
             }
         }

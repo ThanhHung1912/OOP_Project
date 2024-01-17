@@ -1,5 +1,7 @@
 package object;
 
+import Observer.ObjectObserver;
+import Observer.PlayerObserver;
 import entities.Player;
 import gameStates.Playing;
 import levels.Level;
@@ -16,9 +18,9 @@ import static utilz.HelpMethods.CanCannonSeePlayer;
 import static utilz.HelpMethods.IsProjectileHittingLevel;
 import static utilz.Constant.Projectiles.*;
 
-public class ObjectManager {
+public class ObjectManager implements PlayerObserver {
     private Playing playing;
-
+    private ArrayList<ObjectObserver> observers = new ArrayList<>();
     private BufferedImage[][] potionImgs, containerImgs;
     private BufferedImage[] cannonImgs;
     private BufferedImage[] chestImgs;
@@ -80,6 +82,7 @@ public class ObjectManager {
     }
 
     public void update(int[][] lvlData, Player player) {
+        checkObjectTouched(player);
         for (Potion p : potions) {
             if (p.isActive())
                 p.update();
@@ -108,7 +111,6 @@ public class ObjectManager {
         }
         updateCannons(lvlData, player);
         updateProjectiles(lvlData, player);
-
     }
 
     public void draw(Graphics g, int xLvlOffset) {
@@ -207,10 +209,7 @@ public class ObjectManager {
         for (Projectile p : projectiles)
             if (p.isActive()) {
                 p.updatePos();
-                if (p.getHitbox().intersects(player.getHitBox())) {
-                    player.changeHealth(-25);
-                    p.setActive(false);
-                } else if (IsProjectileHittingLevel(p, lvlData))
+                if (IsProjectileHittingLevel(p, lvlData))
                     p.setActive(false);
             }
     }
@@ -220,7 +219,7 @@ public class ObjectManager {
         if (c.getObjectType() == CANNON_LEFT)
             dir = -1;
 
-        projectiles.add(new Projectile((int) c.getHitbox().x, (int) c.getHitbox().y, dir));
+        projectiles.add(new Projectile((int) c.getHitbox().x, (int) c.getHitbox().y, CANNON_BALL, dir));
 
     }
 
@@ -261,16 +260,18 @@ public class ObjectManager {
             if (p.isActive()){
                 if (player.getHitBox().intersects(p.getHitbox())){
                     p.setActive(false);
-                    applyEffectToPlayer(p);
+                    notifyObserver(p.objectType);
                 }
             }
         for (Spike s : spikes)
-            if (s.getHitbox().intersects(player.getHitBox()))
-                player.dead();
+            if (s.getHitbox().intersects(player.getHitBox())) {
+                notifyObserver(SPIKE);
+
+            }
         for (Chest c : chests) {
             if (c.getHitbox().intersects(player.getHitBox())) {
                 if (player.getKey() > 0) {
-                    player.useKey();
+                    notifyObserver(TREASURE_CHEST);
                     c.doAnimation = true;
                 }
             }
@@ -279,19 +280,19 @@ public class ObjectManager {
             if (k.isActive()) {
                 if (player.getHitBox().intersects(k.getHitbox())) {
                     k.setActive(false);
-                    player.pickUpKey();
-
+                    notifyObserver(KEY);
+                }
+            }
+        }
+        for (Projectile p: projectiles) {
+            if (p.isActive()) {
+                if (p.getHitbox().intersects(player.getHitBox())) {
+                    notifyObserver(CANNON_BALL);
+                    p.setActive(false);
                 }
             }
         }
     }
-    public void applyEffectToPlayer(Potion p) {
-        if (p.getObjectType() == RED_POTION)
-            playing.getPlayer().changeHealth(RED_POTION_VALUE);
-        else
-            playing.getPlayer().changePower(BLUE_POTION_VALUE);
-    }
-
     public void checkObjectHit(Rectangle2D.Float attackbox) {
         for (GameContainer gc : containers)
             if (gc.isActive() && !gc.doAnimation) {
@@ -326,5 +327,18 @@ public class ObjectManager {
     }
     public ArrayList<Chest> getChests() {
         return chests;
+    }
+    public void attachObserver(ObjectObserver o) {
+        observers.add(o);
+    }
+    public void notifyObserver(int objectType) {
+        for (ObjectObserver o : observers) {
+            o.updateObjectEffect(objectType);
+        }
+    }
+
+    @Override
+    public void playerHasAttacked(Rectangle2D.Float attackBox) {
+        checkObjectHit(attackBox);
     }
 }

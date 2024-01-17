@@ -1,6 +1,8 @@
 package entities;
 
 import java.awt.Graphics;
+
+import Observer.PlayerObserver;
 import gameStates.Playing;
 import levels.Level;
 import utilz.LoadSave;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import static utilz.Constant.EnemyConstant.*;
 
-public class EnemyManager {
+public class EnemyManager implements PlayerObserver {
     private Playing playing;
     private BufferedImage[][] crabbyArr;
     private ArrayList<Crabby> crabbies = new ArrayList<>();
@@ -74,5 +76,10 @@ public class EnemyManager {
     }
     public ArrayList<Crabby> getCrabbies() {
         return crabbies;
+    }
+
+    @Override
+    public void playerHasAttacked(Rectangle2D.Float attackBox) {
+        checkEnemyHit(attackBox);
     }
 }

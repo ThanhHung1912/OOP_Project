@@ -1,5 +1,7 @@
 package entities;
 
+import Observer.ObjectObserver;
+import Observer.PlayerObserver;
 import audio.AudioPlayer;
 import main.Game;
 import utilz.LoadSave;
@@ -7,14 +9,19 @@ import utilz.LoadSave;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 import gameStates.Playing;
 
 import static main.Game.SCALE;
 import static utilz.Constant.*;
+import static utilz.Constant.ObjectConstant.*;
 import static utilz.Constant.PlayerConstants.*;
+import static utilz.Constant.Projectiles.CANNON_BALL_DAMAGE;
 import static utilz.HelpMethods.*;
 
-public class Player extends Entity {
+public class Player extends Entity implements ObjectObserver {
+    private ArrayList<PlayerObserver> observers = new ArrayList<>();
     private BufferedImage img;
     private BufferedImage[][] animations;
     private int[][] lvlData;
@@ -120,7 +127,7 @@ public class Player extends Entity {
                 aniIndex = 0;
                 playing.setPlayerDying(true);
                 playing.getGame().getAudioPlayer().playEffect(AudioPlayer.DIE);
-            } else if(aniIndex == GetSpriteAmount(DEAD) - 1 && aniTick >= TICKS_PER_ANI - 1){
+            } else if(aniIndex == GetPlayerSpriteAmount(DEAD) - 1 && aniTick >= TICKS_PER_ANI - 1){
                 playing.setGameOver(true);
                 playing.getGame().getAudioPlayer().stopSong();
                 playing.getGame().getAudioPlayer().playEffect(AudioPlayer.GAMEOVER);
@@ -135,7 +142,6 @@ public class Player extends Entity {
 
         updatePos();
         if (isMoving) {
-            checkObjectTouched();
             tileY = (int) (hitBox.y / Game.TILES_SIZE);
             if(powerAttackActive){
                 powerAttackTick++;
@@ -153,21 +159,14 @@ public class Player extends Entity {
         updateAnimation();
     }
 
-    private void checkObjectTouched() {
-        playing.checkObjectTouched(this);
-    }
-
     private void checkAttack() {
         if (attackChecked || aniIndex != 1)
             return;
         attackChecked = true;
-
+        notifyObserver(attackBox);
         if(powerAttackActive){
             attackChecked = false;
         }
-
-        playing.checkEnemyHit(attackBox);
-        playing.checkObjectHit(attackBox);
         playing.getGame().getAudioPlayer().playAttackSound();
 
     }
@@ -344,7 +343,7 @@ public class Player extends Entity {
         if (aniTick >= TICKS_PER_ANI) {
             aniIndex++;
             aniTick = 0;
-            if (aniIndex >= GetSpriteAmount(state)) {
+            if (aniIndex >= GetPlayerSpriteAmount(state)) {
                 aniIndex = 0;
                 attacking = false;
                 attackChecked = false;
@@ -442,5 +441,37 @@ public class Player extends Entity {
 
     public void useKey() {
         key--;
+    }
+
+    @Override
+    public void updateObjectEffect(int objectType) {
+        switch (objectType) {
+            case RED_POTION:
+                changeHealth(RED_POTION_VALUE);
+                break;
+            case BLUE_POTION:
+                changePower(BLUE_POTION_VALUE);
+                break;
+            case SPIKE:
+                dead();
+                break;
+            case TREASURE_CHEST:
+                useKey();
+                break;
+            case KEY:
+                pickUpKey();
+                break;
+            case CANNON_BALL:
+                changeHealth(-CANNON_BALL_DAMAGE);
+                break;
+        }
+    }
+    public void attachObserver(PlayerObserver o) {
+        observers.add(o);
+    }
+    public void notifyObserver(Rectangle2D.Float attackBox) {
+        for (PlayerObserver o : observers) {
+            o.playerHasAttacked(attackBox);
+        }
     }
 }

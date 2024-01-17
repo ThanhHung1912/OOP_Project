@@ -24,7 +24,7 @@ public class GameObject {
         if (aniTick >= TICKS_PER_ANI) {
             aniTick = 0;
             aniIndex++;
-            if (aniIndex >= GetSpriteAmount(objectType)) {
+            if (aniIndex >= GetObjectSpriteAmount(objectType)) {
                 if (objectType == BARREL || objectType == BOX){
                     doAnimation = false;
                     active = false;

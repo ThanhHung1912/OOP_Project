@@ -14,6 +14,7 @@ public class Constant {
         public static final int CANNON_BALL_WIDTH = (int)(Game.SCALE * CANNON_BALL_DEFAULT_WIDTH);
         public static final int CANNON_BALL_HEIGHT = (int)(Game.SCALE * CANNON_BALL_DEFAULT_HEIGHT);
         public static final float SPEED = 0.5f * Game.SCALE;
+        public static final int CANNON_BALL_DAMAGE = 25;
     }
     public static class ObjectConstant {
         public static final int RED_POTION = 0;
@@ -21,11 +22,12 @@ public class Constant {
         public static final int BARREL = 2;
         public static final int BOX = 3;
         public static final int SPIKE = 4;
-        public static final int CANNON_LEFT = 7;
-        public static final int CANNON_RIGHT = 8;
-        public static final int TREASURE_CHEST = 5;
-        public static final int KEY = 6;
-        public static final int PADLOCK = 9;
+        public static final int CANNON_LEFT = 5;
+        public static final int CANNON_RIGHT = 6;
+        public static final int CANNON_BALL = 7;
+        public static final int TREASURE_CHEST = 8;
+        public static final int KEY = 9;
+        public static final int PADLOCK = 10;
 
         public static final int RED_POTION_VALUE = 15;//HEALTH
         public static final int BLUE_POTION_VALUE = 10;//POWER
@@ -65,7 +67,7 @@ public class Constant {
         public static final int PADLOCK_WIDTH = (int) (PADLOCK_WIDTH_DEFAULT * Game.SCALE);
         public static final int PADLOCK_HEIGHT = (int) (PADLOCK_HEIGHT_DEFAULT * Game.SCALE);
 
-        public static int GetSpriteAmount(int object_type) {
+        public static int GetObjectSpriteAmount(int object_type) {
 
             switch (object_type) {
                 case RED_POTION, BLUE_POTION:
@@ -107,7 +109,7 @@ public class Constant {
         public static final int CRABBY_DRAWOFFSET_X = (int) (25 * Game.SCALE);
         public static final int CRABBY_DRAWOFFSET_Y = (int) (6 * Game.SCALE);
 
-        public static int GetSpriteAmount(int enemy_type, int enemy_state) {
+        public static int GetEnemySpriteAmount(int enemy_type, int enemy_state) {
 
             switch (enemy_type) {
                 case CRABBY:
@@ -189,7 +191,7 @@ public class Constant {
         public static final int ATTACK = 4;
         public static final int HIT = 5;
         public static final int DEAD = 6;
-        public static int GetSpriteAmount(int player_action) {
+        public static int GetPlayerSpriteAmount(int player_action) {
             switch (player_action) {
                 case DEAD:
                     return 8;
