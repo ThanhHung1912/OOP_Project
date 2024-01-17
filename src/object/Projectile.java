@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 
 import main.Game;
 
+import static utilz.Constant.Directions.RIGHT;
 import static utilz.Constant.Projectiles.*;
 
 public class Projectile extends GameObject {
@@ -14,7 +15,7 @@ public class Projectile extends GameObject {
         int xOffset = (int) (-3 * Game.SCALE);
         int yOffset = (int) (5 * Game.SCALE);
 
-        if (dir == 1)
+        if (dir == RIGHT)
             xOffset = (int) (29 * Game.SCALE);
         initHitbox(CANNON_BALL_WIDTH, CANNON_BALL_HEIGHT);
         hitbox.x += xOffset;
@@ -23,11 +24,17 @@ public class Projectile extends GameObject {
     }
 
     public void updatePos() {
-        hitbox.x += dir * SPEED;
+        if (dir == RIGHT)
+            hitbox.x += SPEED;
+        else
+            hitbox.x -= SPEED;
     }
 
     public void setPos(int x, int y) {
         hitbox.x = x;
         hitbox.y = y;
+    }
+    public int getDir() {
+        return dir;
     }
 }
