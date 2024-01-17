@@ -404,6 +404,8 @@ public class Player extends Entity {
         hitBox.x = x;
         hitBox.y = y;
 
+        key = 0;
+
         resetAttackBox();
 
         if (!IsEntityOnFloor(hitBox, lvlData))
