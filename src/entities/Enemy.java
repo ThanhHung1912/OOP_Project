@@ -4,7 +4,6 @@ import main.Game;
 import java.awt.geom.Rectangle2D;
 
 import static main.Game.SCALE;
-import static main.Game.UPS;
 import static utilz.Constant.*;
 import static utilz.Constant.EnemyConstant.*;
 import static utilz.HelpMethods.*;
@@ -132,7 +131,7 @@ public abstract class Enemy extends Entity {
         if (aniTick >= TICKS_PER_ANI) {
             aniTick = 0;
             aniIndex++;
-            if (aniIndex >= GetSpriteAmount(enemyType, state)) {
+            if (aniIndex >= GetEnemySpriteAmount(enemyType, state)) {
                 aniIndex = 0;
 
                 switch (state) {

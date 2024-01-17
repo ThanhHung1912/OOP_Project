@@ -82,6 +82,7 @@ public class Playing extends State implements Statemethods{
         levelManager = new LevelManager(game);
         enemyManager = new EnemyManager(this);
         objectManager = new ObjectManager(this);
+
         player = new Player(200, 200, (int) (Game.SCALE*64), (int) (Game.SCALE*40), this);
         player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
         player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
@@ -89,7 +90,14 @@ public class Playing extends State implements Statemethods{
         pauseOverlay = new PauseOverlay(this);
         gameOverOverlay = new GameOverOverlay(this);
         levelCompletedOverlay = new LevelCompletedOverlay(this);
+
+        addObserver();
     }
+
+    private void addObserver() {
+        objectManager.attachObserver(player);
+    }
+
     @Override
     public void update(){
         if (paused) {
@@ -125,7 +133,7 @@ public class Playing extends State implements Statemethods{
             }
         }
         if (!isAnyActive && !isAnyLocked) {
-            lvlCompleted = true;
+            setLevelCompleted(true);
         }
     }
 
@@ -324,9 +332,6 @@ public class Playing extends State implements Statemethods{
         return objectManager;
     }
 
-    public void checkObjectTouched(Player p) {
-        objectManager.checkObjectTouched(p);
-    }
     public void checkObjectHit(Rectangle2D.Float attackbox){
         objectManager.checkObjectHit(attackbox);
     }

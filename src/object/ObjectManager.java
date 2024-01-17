@@ -1,5 +1,6 @@
 package object;
 
+import Observer.ObjectObserver;
 import entities.Player;
 import gameStates.Playing;
 import levels.Level;
@@ -18,7 +19,7 @@ import static utilz.Constant.Projectiles.*;
 
 public class ObjectManager {
     private Playing playing;
-
+    private ArrayList<ObjectObserver> observers = new ArrayList<>();
     private BufferedImage[][] potionImgs, containerImgs;
     private BufferedImage[] cannonImgs;
     private BufferedImage[] chestImgs;
@@ -80,6 +81,7 @@ public class ObjectManager {
     }
 
     public void update(int[][] lvlData, Player player) {
+        checkObjectTouched(player);
         for (Potion p : potions) {
             if (p.isActive())
                 p.update();
@@ -108,7 +110,6 @@ public class ObjectManager {
         }
         updateCannons(lvlData, player);
         updateProjectiles(lvlData, player);
-
     }
 
     public void draw(Graphics g, int xLvlOffset) {
@@ -258,16 +259,23 @@ public class ObjectManager {
             if (p.isActive()){
                 if (player.getHitBox().intersects(p.getHitbox())){
                     p.setActive(false);
-                    applyEffectToPlayer(p);
+                    for (ObjectObserver o : observers) {
+                        o.updateObjectEffect(p.getObjectType());
+                    }
                 }
             }
         for (Spike s : spikes)
-            if (s.getHitbox().intersects(player.getHitBox()))
-                player.dead();
+            if (s.getHitbox().intersects(player.getHitBox())) {
+                for (ObjectObserver o : observers) {
+                    o.updateObjectEffect(s.getObjectType());
+                }
+            }
         for (Chest c : chests) {
             if (c.getHitbox().intersects(player.getHitBox())) {
                 if (player.getKey() > 0) {
-                    player.useKey();
+                    for (ObjectObserver o : observers) {
+                        o.updateObjectEffect(c.getObjectType());
+                    }
                     c.doAnimation = true;
                 }
             }
@@ -276,7 +284,9 @@ public class ObjectManager {
             if (k.isActive()) {
                 if (player.getHitBox().intersects(k.getHitbox())) {
                     k.setActive(false);
-                    player.pickUpKey();
+                    for (ObjectObserver o : observers) {
+                        o.updateObjectEffect(k.getObjectType());
+                    }
 
                 }
             }
@@ -284,19 +294,14 @@ public class ObjectManager {
         for (Projectile p: projectiles) {
             if (p.isActive()) {
                 if (p.getHitbox().intersects(player.getHitBox())) {
-                    player.changeHealth(-25);
+                    for (ObjectObserver o : observers) {
+                        o.updateObjectEffect(p.getObjectType());
+                    }
                     p.setActive(false);
                 }
             }
         }
     }
-    public void applyEffectToPlayer(Potion p) {
-        if (p.getObjectType() == RED_POTION)
-            playing.getPlayer().changeHealth(RED_POTION_VALUE);
-        else
-            playing.getPlayer().changePower(BLUE_POTION_VALUE);
-    }
-
     public void checkObjectHit(Rectangle2D.Float attackbox) {
         for (GameContainer gc : containers)
             if (gc.isActive() && !gc.doAnimation) {
@@ -331,5 +336,8 @@ public class ObjectManager {
     }
     public ArrayList<Chest> getChests() {
         return chests;
+    }
+    public void attachObserver(ObjectObserver o) {
+        observers.add(o);
     }
 }
