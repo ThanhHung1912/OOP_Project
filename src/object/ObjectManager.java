@@ -207,10 +207,7 @@ public class ObjectManager {
         for (Projectile p : projectiles)
             if (p.isActive()) {
                 p.updatePos();
-                if (p.getHitbox().intersects(player.getHitBox())) {
-                    player.changeHealth(-25);
-                    p.setActive(false);
-                } else if (IsProjectileHittingLevel(p, lvlData))
+                if (IsProjectileHittingLevel(p, lvlData))
                     p.setActive(false);
             }
     }
@@ -220,7 +217,7 @@ public class ObjectManager {
         if (c.getObjectType() == CANNON_LEFT)
             dir = -1;
 
-        projectiles.add(new Projectile((int) c.getHitbox().x, (int) c.getHitbox().y, dir));
+        projectiles.add(new Projectile((int) c.getHitbox().x, (int) c.getHitbox().y, CANNON_BALL, dir));
 
     }
 
@@ -281,6 +278,14 @@ public class ObjectManager {
                     k.setActive(false);
                     player.pickUpKey();
 
+                }
+            }
+        }
+        for (Projectile p: projectiles) {
+            if (p.isActive()) {
+                if (p.getHitbox().intersects(player.getHitBox())) {
+                    player.changeHealth(-25);
+                    p.setActive(false);
                 }
             }
         }
