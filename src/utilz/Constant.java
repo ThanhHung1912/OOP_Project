@@ -25,6 +25,7 @@ public class Constant {
         public static final int CANNON_RIGHT = 8;
         public static final int TREASURE_CHEST = 5;
         public static final int KEY = 6;
+        public static final int PADLOCK = 9;
 
         public static final int RED_POTION_VALUE = 15;//HEALTH
         public static final int BLUE_POTION_VALUE = 10;//POWER
@@ -58,6 +59,12 @@ public class Constant {
         public static final int KEY_HEIGHT_DEFAULT = 24;
         public static final int KEY_WIDTH = (int) (KEY_WIDTH_DEFAULT * Game.SCALE);
         public static final int KEY_HEIGHT = (int) (KEY_HEIGHT_DEFAULT * Game.SCALE);
+
+        public static final int PADLOCK_WIDTH_DEFAULT = 32;
+        public static final int PADLOCK_HEIGHT_DEFAULT = 32;
+        public static final int PADLOCK_WIDTH = (int) (PADLOCK_WIDTH_DEFAULT * Game.SCALE);
+        public static final int PADLOCK_HEIGHT = (int) (PADLOCK_HEIGHT_DEFAULT * Game.SCALE);
+
         public static int GetSpriteAmount(int object_type) {
 
             switch (object_type) {

@@ -23,7 +23,7 @@ public class ObjectManager {
     private BufferedImage[] cannonImgs;
     private BufferedImage[] chestImgs;
     private BufferedImage[] keyImgs;
-    private BufferedImage spikeImg, cannonBallImg;
+    private BufferedImage spikeImg, cannonBallImg, padlockImg;
 
     private ArrayList<Potion> potions;
     private ArrayList<GameContainer> containers;
@@ -32,6 +32,7 @@ public class ObjectManager {
     private ArrayList<Projectile> projectiles = new ArrayList<>();
     private ArrayList<Chest> chests;
     private ArrayList<Key> keys;
+    private ArrayList<Padlock> padlocks = new ArrayList<>();
 
     public ObjectManager(Playing playing) {
         this.playing = playing;
@@ -74,6 +75,8 @@ public class ObjectManager {
         for (int i = 0; i < keyImgs.length; i++) {
             keyImgs[i] = keySprites.getSubimage(i * 24, 0, 24, 24);
         }
+
+        padlockImg = LoadSave.getSpriteAtlas(LoadSave.PADLOCK);
     }
 
     public void update(int[][] lvlData, Player player) {
@@ -86,12 +89,21 @@ public class ObjectManager {
                 gc.update();
         }
         for (Chest c : chests) {
-            if (c.isActive())
+            if (c.isActive()) {
                 c.update();
+                if (c.getAniIndex() == 1 && c.getAniTick() == 0) {
+                    padlocks.add(new Padlock((int) (c.getHitbox().x + 8 * Game.SCALE), (int) (c.getHitbox().y - 10 * Game.SCALE), PADLOCK));
+                }
+            }
         }
         for (Key k : keys) {
             if (k.isActive()) {
                 k.update();
+            }
+        }
+        for (Padlock p : padlocks) {
+            if (p.isActive()) {
+                p.update(lvlData);
             }
         }
         updateCannons(lvlData, player);
@@ -107,6 +119,15 @@ public class ObjectManager {
         drawProjectiles(g, xLvlOffset);
         drawChests(g, xLvlOffset);
         drawKeys(g, xLvlOffset);
+        drawPadlocks(g, xLvlOffset);
+    }
+
+    private void drawPadlocks(Graphics g, int xLvlOffset) {
+        for (Padlock p : padlocks) {
+            if (p.isActive()) {
+                g.drawImage(padlockImg, (int) (p.getHitbox().x - p.getxDrawOffSet() - xLvlOffset), (int) (p.getHitbox().y - p.getyDrawOffSet()), PADLOCK_WIDTH, PADLOCK_HEIGHT, null);
+            }
+        }
     }
 
     private void drawKeys(Graphics g, int xLvlOffset) {
@@ -233,6 +254,7 @@ public class ObjectManager {
         chests = newLevel.getChests();
         keys = newLevel.getKeys();
         projectiles.clear();
+        padlocks.clear();
     }
     public void checkObjectTouched(Player player){
         for (Potion p : potions)
