@@ -1,6 +1,7 @@
 package object;
 
 import Observer.ObjectObserver;
+import Observer.PlayerObserver;
 import entities.Player;
 import gameStates.Playing;
 import levels.Level;
@@ -17,7 +18,7 @@ import static utilz.HelpMethods.CanCannonSeePlayer;
 import static utilz.HelpMethods.IsProjectileHittingLevel;
 import static utilz.Constant.Projectiles.*;
 
-public class ObjectManager {
+public class ObjectManager implements PlayerObserver {
     private Playing playing;
     private ArrayList<ObjectObserver> observers = new ArrayList<>();
     private BufferedImage[][] potionImgs, containerImgs;
@@ -259,23 +260,18 @@ public class ObjectManager {
             if (p.isActive()){
                 if (player.getHitBox().intersects(p.getHitbox())){
                     p.setActive(false);
-                    for (ObjectObserver o : observers) {
-                        o.updateObjectEffect(p.getObjectType());
-                    }
+                    notifyObserver(p.objectType);
                 }
             }
         for (Spike s : spikes)
             if (s.getHitbox().intersects(player.getHitBox())) {
-                for (ObjectObserver o : observers) {
-                    o.updateObjectEffect(s.getObjectType());
-                }
+                notifyObserver(SPIKE);
+
             }
         for (Chest c : chests) {
             if (c.getHitbox().intersects(player.getHitBox())) {
                 if (player.getKey() > 0) {
-                    for (ObjectObserver o : observers) {
-                        o.updateObjectEffect(c.getObjectType());
-                    }
+                    notifyObserver(TREASURE_CHEST);
                     c.doAnimation = true;
                 }
             }
@@ -284,19 +280,14 @@ public class ObjectManager {
             if (k.isActive()) {
                 if (player.getHitBox().intersects(k.getHitbox())) {
                     k.setActive(false);
-                    for (ObjectObserver o : observers) {
-                        o.updateObjectEffect(k.getObjectType());
-                    }
-
+                    notifyObserver(KEY);
                 }
             }
         }
         for (Projectile p: projectiles) {
             if (p.isActive()) {
                 if (p.getHitbox().intersects(player.getHitBox())) {
-                    for (ObjectObserver o : observers) {
-                        o.updateObjectEffect(p.getObjectType());
-                    }
+                    notifyObserver(CANNON_BALL);
                     p.setActive(false);
                 }
             }
@@ -339,5 +330,15 @@ public class ObjectManager {
     }
     public void attachObserver(ObjectObserver o) {
         observers.add(o);
+    }
+    public void notifyObserver(int objectType) {
+        for (ObjectObserver o : observers) {
+            o.updateObjectEffect(objectType);
+        }
+    }
+
+    @Override
+    public void playerHasAttacked(Rectangle2D.Float attackBox) {
+        checkObjectHit(attackBox);
     }
 }

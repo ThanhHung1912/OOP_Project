@@ -63,21 +63,6 @@ public class Playing extends State implements Statemethods{
         calcLvlOffset();
         loadStartLevel();
     }
-    public void loadNextLevel() {
-        levelManager.loadNextLevel();
-        player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
-        resetAll();
-    }
-    private void loadStartLevel() {
-
-        enemyManager.loadEnemies(levelManager.getCurrentLevel());
-        objectManager.loadObjects(levelManager.getCurrentLevel());
-    }
-
-    private void calcLvlOffset() {
-        maxLvlOffsetX = levelManager.getCurrentLevel().getLvlOffset();
-    }
-
     public void initPlaying() {
         levelManager = new LevelManager(game);
         enemyManager = new EnemyManager(this);
@@ -96,6 +81,23 @@ public class Playing extends State implements Statemethods{
 
     private void addObserver() {
         objectManager.attachObserver(player);
+        player.attachObserver(objectManager);
+        player.attachObserver(enemyManager);
+    }
+
+    public void loadNextLevel() {
+        levelManager.loadNextLevel();
+        player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
+        resetAll();
+    }
+    private void loadStartLevel() {
+
+        enemyManager.loadEnemies(levelManager.getCurrentLevel());
+        objectManager.loadObjects(levelManager.getCurrentLevel());
+    }
+
+    private void calcLvlOffset() {
+        maxLvlOffsetX = levelManager.getCurrentLevel().getLvlOffset();
     }
 
     @Override
@@ -304,17 +306,9 @@ public class Playing extends State implements Statemethods{
     public void unpauseGame() {
         paused = false;
     }
-
-    public void checkEnemyHit(Rectangle2D.Float attackBox) {
-        enemyManager.checkEnemyHit(attackBox);
-    }
-
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
     }
-
-
-
     public Player getPlayer() {
         return player;
     }
@@ -332,9 +326,6 @@ public class Playing extends State implements Statemethods{
         return objectManager;
     }
 
-    public void checkObjectHit(Rectangle2D.Float attackbox){
-        objectManager.checkObjectHit(attackbox);
-    }
 
     public void setPlayerDying(boolean playerDying){
         this.playerDying = playerDying;

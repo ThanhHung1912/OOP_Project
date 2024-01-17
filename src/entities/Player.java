@@ -1,6 +1,7 @@
 package entities;
 
 import Observer.ObjectObserver;
+import Observer.PlayerObserver;
 import audio.AudioPlayer;
 import main.Game;
 import utilz.LoadSave;
@@ -8,6 +9,8 @@ import utilz.LoadSave;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 import gameStates.Playing;
 
 import static main.Game.SCALE;
@@ -18,6 +21,7 @@ import static utilz.Constant.Projectiles.CANNON_BALL_DAMAGE;
 import static utilz.HelpMethods.*;
 
 public class Player extends Entity implements ObjectObserver {
+    private ArrayList<PlayerObserver> observers = new ArrayList<>();
     private BufferedImage img;
     private BufferedImage[][] animations;
     private int[][] lvlData;
@@ -159,13 +163,10 @@ public class Player extends Entity implements ObjectObserver {
         if (attackChecked || aniIndex != 1)
             return;
         attackChecked = true;
-
+        notifyObserver(attackBox);
         if(powerAttackActive){
             attackChecked = false;
         }
-
-        playing.checkEnemyHit(attackBox);
-        playing.checkObjectHit(attackBox);
         playing.getGame().getAudioPlayer().playAttackSound();
 
     }
@@ -463,6 +464,14 @@ public class Player extends Entity implements ObjectObserver {
             case CANNON_BALL:
                 changeHealth(-CANNON_BALL_DAMAGE);
                 break;
+        }
+    }
+    public void attachObserver(PlayerObserver o) {
+        observers.add(o);
+    }
+    public void notifyObserver(Rectangle2D.Float attackBox) {
+        for (PlayerObserver o : observers) {
+            o.playerHasAttacked(attackBox);
         }
     }
 }
