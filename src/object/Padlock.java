@@ -3,11 +3,11 @@ package object;
 import main.Game;
 
 import static utilz.Constant.GRAVITY;
-import static utilz.HelpMethods.CanMoveHere;
-import static utilz.HelpMethods.IsEntityOnFloor;
+import static utilz.HelpMethods.*;
 
 public class Padlock extends GameObject{
-    private float ySpeed = 0;
+    private float ySpeed = 0.5f;
+    private float xSpeed = 0.75f * Game.SCALE;
     public Padlock(int x, int y, int objectType) {
         super(x, y, objectType);
         initHitbox(14, 13);
@@ -19,9 +19,20 @@ public class Padlock extends GameObject{
     }
 
     private void updatePos(int[][] lvlData) {
-        ySpeed += GRAVITY;
+        ySpeed += (float) (GRAVITY * 0.2);
+        xSpeed -= 0.02f * Game.SCALE;
         if (!IsEntityOnFloor(hitbox, lvlData)) {
-            hitbox.y += ySpeed;
+            if (CanMoveHere(hitbox.x, hitbox.y + ySpeed, hitbox.width, hitbox.height, lvlData)) {
+                hitbox.y += ySpeed;
+                if (CanMoveHere(hitbox.x + xSpeed, hitbox.y, hitbox.width, hitbox.height, lvlData))
+                    hitbox.x += xSpeed;
+                else {
+                    hitbox.x = GetCollisionGround(hitbox, xSpeed);
+                }
+            }
+            else {
+                hitbox.y = GetCollisionRoof(hitbox, ySpeed);
+            }
         }
     }
 }

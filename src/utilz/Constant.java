@@ -18,16 +18,16 @@ public class Constant {
     }
     public static class ObjectConstant {
         public static final int RED_POTION = 0;
-        public static final int BLUE_POTION = 1;
-        public static final int BARREL = 2;
-        public static final int BOX = 3;
+        public static final int BLUE_POTION = 10;
+        public static final int BARREL = 8;
+        public static final int BOX = 9;
         public static final int SPIKE = 4;
         public static final int CANNON_LEFT = 5;
         public static final int CANNON_RIGHT = 6;
         public static final int CANNON_BALL = 7;
-        public static final int TREASURE_CHEST = 8;
-        public static final int KEY = 9;
-        public static final int PADLOCK = 10;
+        public static final int TREASURE_CHEST = 1;
+        public static final int KEY = 2;
+        public static final int PADLOCK = 3;
 
         public static final int RED_POTION_VALUE = 15;//HEALTH
         public static final int BLUE_POTION_VALUE = 10;//POWER
