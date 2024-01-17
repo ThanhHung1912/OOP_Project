@@ -27,7 +27,8 @@ public class ObjectManager implements PlayerObserver {
     private BufferedImage[] cannonImgs;
     private BufferedImage[] chestImgs;
     private BufferedImage[] keyImgs;
-    private BufferedImage spikeImg, cannonBallImg, padlockImg;
+    private BufferedImage[] flagImgs;
+    private BufferedImage spikeImg, cannonBallImg, padlockImg, platformImg;
 
     private ArrayList<Potion> potions;
     private ArrayList<GameContainer> containers;
@@ -37,6 +38,8 @@ public class ObjectManager implements PlayerObserver {
     private ArrayList<Chest> chests;
     private ArrayList<Key> keys;
     private ArrayList<Padlock> padlocks = new ArrayList<>();
+    private ArrayList<FlagPlatform> platforms;
+    private ArrayList<Flag> flags;
 
     public ObjectManager(Playing playing) {
         this.playing = playing;
@@ -81,6 +84,14 @@ public class ObjectManager implements PlayerObserver {
         }
 
         padlockImg = LoadSave.getSpriteAtlas(LoadSave.PADLOCK);
+
+        platformImg = LoadSave.getSpriteAtlas(LoadSave.FLAG_PLATFORM);
+
+        BufferedImage flagSprite = LoadSave.getSpriteAtlas(LoadSave.FLAG);
+        flagImgs = new BufferedImage[9];
+        for (int i = 0; i < flagImgs.length; i++)
+                flagImgs[i] = flagSprite.getSubimage(34 * i, 0, 34, 93);
+
     }
 
     public void update(int[][] lvlData, Player player) {
@@ -111,6 +122,10 @@ public class ObjectManager implements PlayerObserver {
                 p.update(lvlData);
             }
         }
+        for (Flag f : flags) {
+            if (f.isActive())
+                f.update();
+        }
         updateCannons(lvlData, player);
         updateProjectiles(lvlData, player);
     }
@@ -124,6 +139,24 @@ public class ObjectManager implements PlayerObserver {
         drawChests(g, xLvlOffset);
         drawKeys(g, xLvlOffset);
         drawPadlocks(g, xLvlOffset);
+        drawPlatforms(g, xLvlOffset);
+        drawFlags(g, xLvlOffset);
+    }
+
+    private void drawFlags(Graphics g, int xLvlOffset) {
+        for (Flag f : flags) {
+            if (f.isActive()) {
+                g.drawImage(flagImgs[f.getAniIndex()], (int) (f.getHitbox().x - f.getxDrawOffSet() - xLvlOffset), (int) (f.getHitbox().y - f.getyDrawOffSet()), FLAG_WIDTH, FLAG_HEIGHT, null);
+            }
+        }
+    }
+
+    private void drawPlatforms(Graphics g, int xLvlOffset) {
+        for (FlagPlatform p : platforms) {
+            if (p.isActive()) {
+                g.drawImage(platformImg, (int) (p.getHitbox().x - p.getxDrawOffSet() - xLvlOffset), (int) (p.getHitbox().y - p.getyDrawOffSet()), PLATFORM_WIDTH, PLATFORM_HEIGHT, null);
+            }
+        }
     }
 
     private void drawPadlocks(Graphics g, int xLvlOffset) {
@@ -254,6 +287,8 @@ public class ObjectManager implements PlayerObserver {
         cannons = newLevel.getCannons();
         chests = newLevel.getChests();
         keys = newLevel.getKeys();
+        platforms = newLevel.getFlagPlatforms();
+        flags = newLevel.getFlags();
         projectiles.clear();
         padlocks.clear();
     }
@@ -326,6 +361,12 @@ public class ObjectManager implements PlayerObserver {
         }
         for (Key k : keys) {
             k.reset();
+        }
+        for (FlagPlatform p : platforms) {
+            p.reset();
+        }
+        for (Flag f : flags) {
+            f.reset();
         }
     }
     public ArrayList<Chest> getChests() {

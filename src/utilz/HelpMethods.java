@@ -100,6 +100,18 @@ public class HelpMethods {
             }
         return list;
     }
+    public static ArrayList<FlagPlatform> GetPlatforms(BufferedImage img) {
+        ArrayList<FlagPlatform> list = new ArrayList<>();
+
+        for (int j = 0; j < img.getHeight(); j++)
+            for (int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getBlue();
+                if (value == PLATFORM)
+                    list.add(new FlagPlatform(i * Game.TILES_SIZE, j * Game.TILES_SIZE, KEY));
+            }
+        return list;
+    }
     
     public static ArrayList<Cannon> GetCannons(BufferedImage img) {
         ArrayList<Cannon> list = new ArrayList<>();
@@ -253,4 +265,5 @@ public class HelpMethods {
                 return false;
         return true;
     }
+
 }
