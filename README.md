@@ -5,7 +5,8 @@ Ngô Nam Hưng.<br>
 Hồ Trung Thy Giang - ITCSIU22186 - https://github.com/httgiang.<br>
 Dương Thi Quynh Nhu
 
-
+## Report
+https://docs.google.com/document/d/17ezxXJYoTo6__H-3ol8XMqrxPzIVtWN_8KWclhbNXoY/edit?fbclid=IwAR0PCooK4n1CBEcUn6MvyHFHg8E5ZG7Zai9HDxZiT14gLm4ytGWfOdAKMaQ
 
 <h2> Features </h2>
 - 3 Levels with different difficulties.<br>
@@ -13,7 +14,6 @@ Dương Thi Quynh Nhu
 - Enemy: Crabby.<br>
 - Spike: Death instant.<br>
 - Cannon: Damaging Player<br>
-
 
 
 ## Tutorial
