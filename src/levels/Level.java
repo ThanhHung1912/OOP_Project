@@ -9,6 +9,8 @@ import main.Game;
 import object.*;
 import utilz.HelpMethods;
 
+import static main.Game.TILES_SIZE;
+import static utilz.Constant.ObjectConstant.FLAG;
 import static utilz.HelpMethods.*;
 
 public class Level {
@@ -21,6 +23,7 @@ public class Level {
     private ArrayList<Cannon> cannons;
     private ArrayList<Chest> chests;
     private ArrayList<Key> keys;
+    private ArrayList<FlagPlatform> platforms;
     private int lvlTilesWide;
     private int maxTilesOffset;
     private int maxLvlOffsetX;
@@ -37,8 +40,13 @@ public class Level {
         createCannons();
         createChests();
         createKeys();
+        createPlatforms();
         calcLvlOffset();
         calcPlayerSpawn();
+    }
+
+    private void createPlatforms() {
+        platforms = HelpMethods.GetPlatforms(img);
     }
 
     private void createKeys() {
@@ -64,7 +72,7 @@ public class Level {
     private void calcLvlOffset() {
         lvlTilesWide = img.getWidth();
         maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
-        maxLvlOffsetX = Game.TILES_SIZE * maxTilesOffset;
+        maxLvlOffsetX = TILES_SIZE * maxTilesOffset;
     }
 
     private void createEnemies() {
@@ -108,5 +116,15 @@ public class Level {
     }
     public ArrayList<Key> getKeys() {
         return keys;
+    }
+    public ArrayList<FlagPlatform> getFlagPlatforms() {
+        return platforms;
+    }
+    public ArrayList<Flag> getFlags() {
+        ArrayList<Flag> list = new ArrayList<>();
+        for (FlagPlatform p : platforms) {
+            list.add(new Flag(p.getX(), p.getY(), FLAG));
+        }
+        return list;
     }
 }

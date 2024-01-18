@@ -43,6 +43,8 @@ public class LoadSave {
     public static final String TREASURE_CHEST = "chest_sprites.png";
     public static final String KEY = "key_sprites.png";
     public static final String PADLOCK = "padlock.png";
+    public static final String FLAG_PLATFORM = "flag_platform.png";
+    public static final String FLAG = "flag_sprites.png";
     public static final String DEATH_SCREEN = "death_screen.png";
     public static final String OPTIONS_MENU = "options_background.png";
     public static BufferedImage getSpriteAtlas(String fileName) {

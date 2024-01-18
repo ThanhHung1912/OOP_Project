@@ -18,16 +18,18 @@ public class Constant {
     }
     public static class ObjectConstant {
         public static final int RED_POTION = 0;
-        public static final int BLUE_POTION = 10;
-        public static final int BARREL = 8;
-        public static final int BOX = 9;
+        public static final int BLUE_POTION = 1;
+        public static final int BARREL = 2;
+        public static final int BOX = 3;
         public static final int SPIKE = 4;
         public static final int CANNON_LEFT = 5;
         public static final int CANNON_RIGHT = 6;
         public static final int CANNON_BALL = 7;
-        public static final int TREASURE_CHEST = 1;
-        public static final int KEY = 2;
-        public static final int PADLOCK = 3;
+        public static final int TREASURE_CHEST = 8;
+        public static final int KEY = 9;
+        public static final int PADLOCK = 10;
+        public static final int FLAG = 12;
+        public static final int PLATFORM = 12;
 
         public static final int RED_POTION_VALUE = 15;//HEALTH
         public static final int BLUE_POTION_VALUE = 10;//POWER
@@ -67,6 +69,16 @@ public class Constant {
         public static final int PADLOCK_WIDTH = (int) (PADLOCK_WIDTH_DEFAULT * Game.SCALE);
         public static final int PADLOCK_HEIGHT = (int) (PADLOCK_HEIGHT_DEFAULT * Game.SCALE);
 
+        public static final int FLAG_WIDTH_DEFAULT = 34;
+        public static final int FLAG_HEIGHT_HEIGHT = 93;
+        public static final int FLAG_WIDTH = (int) (FLAG_WIDTH_DEFAULT * Game.SCALE);
+        public static final int FLAG_HEIGHT = (int) (FLAG_HEIGHT_HEIGHT * Game.SCALE);
+
+        public static final int PLATFORM_WIDTH_DEFAULT = 30;
+        public static final int PLATFORM_HEIGHT_DEFAULT = 16;
+        public static final int PLATFORM_WIDTH = (int) (PLATFORM_WIDTH_DEFAULT * Game.SCALE);
+        public static final int PLATFORM_HEIGHT = (int) (PLATFORM_HEIGHT_DEFAULT * Game.SCALE);
+
         public static int GetObjectSpriteAmount(int object_type) {
 
             switch (object_type) {
@@ -78,6 +90,8 @@ public class Constant {
                     return 7;
                 case TREASURE_CHEST, KEY:
                     return 8;
+                case FLAG:
+                    return 9;
             }
             return 1;
         }

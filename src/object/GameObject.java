@@ -38,7 +38,7 @@ public class GameObject {
                     doAnimation = false;
                     aniIndex--;
                 }
-                else if (objectType == BLUE_POTION || objectType == RED_POTION || objectType == KEY) {
+                else if (objectType == BLUE_POTION || objectType == RED_POTION || objectType == KEY || objectType == FLAG) {
                     aniIndex = 0;
                 }
             }
@@ -90,4 +90,13 @@ public class GameObject {
     }
     public void setAnimation (boolean a){
         this.doAnimation = a;
-    }}
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+}
