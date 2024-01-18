@@ -88,7 +88,7 @@ public abstract class Enemy extends Entity {
         int absValue = (int) Math.abs(player.hitBox.x - hitBox.x);
         return absValue <= attackDistance * 5;
     }
-    private void changeWalkDir() {
+    protected void changeWalkDir() {
         if (walkDir == LEFT)
             walkDir = RIGHT;
         else
@@ -131,17 +131,30 @@ public abstract class Enemy extends Entity {
         updateAnimationTick();
     }
 
-    private void updateAnimationTick() {
+    protected void updateAnimationTick() {
         aniTick++;
         if (aniTick >= TICKS_PER_ANI) {
             aniTick = 0;
             aniIndex++;
             if (aniIndex >= GetEnemySpriteAmount(enemyType, state)) {
-                aniIndex = 0;
+                if (enemyType == CRABBY) {
+                    aniIndex = 0;
 
-                switch (state) {
-                    case ATTACK, HIT -> state = IDLE;
-                    case DEAD -> active = false;
+                    switch (state) {
+                        case ATTACK, HIT -> state = IDLE;
+                        case DEAD -> active = false;
+                    }
+                } else if (enemyType == PINKSTAR) {
+                    if (state == ATTACK)
+                        aniIndex = 3;
+                    else {
+                        aniIndex = 0;
+                        if (state == HIT) {
+                            state = IDLE;
+
+                        } else if (state == DEAD)
+                            active = false;
+                    }
                 }
             }
         }

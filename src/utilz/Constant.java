@@ -108,7 +108,8 @@ public class Constant {
     }
 
     public static class EnemyConstant {
-        public static final int CRABBY = 0;
+        public static final int CRABBY = 1;
+        public static final int PINKSTAR = 0;
         public static final int IDLE = 0;
         public static final int RUNNING = 1;
         public static final int ATTACK = 2;
@@ -123,6 +124,14 @@ public class Constant {
         public static final int CRABBY_DRAWOFFSET_X = (int) (25 * Game.SCALE);
         public static final int CRABBY_DRAWOFFSET_Y = (int) (6 * Game.SCALE);
 
+        public static final int PINKSTAR_WIDTH_DEFAULT = 34;
+        public static final int PINKSTAR_HEIGHT_DEFAULT = 30;
+        public static final int PINKSTAR_WIDTH = (int) (PINKSTAR_WIDTH_DEFAULT * Game.SCALE);
+        public static final int PINKSTAR_HEIGHT = (int) (PINKSTAR_HEIGHT_DEFAULT * Game.SCALE);
+
+        public static final int PINKSTAR_DRAWOFFSET_X = (int) (9 * Game.SCALE);
+        public static final int PINKSTAR_DRAWOFFSET_Y = (int) (7 * Game.SCALE);
+
         public static int GetEnemySpriteAmount(int enemy_type, int enemy_state) {
 
             switch (enemy_type) {
@@ -134,6 +143,17 @@ public class Constant {
                             return 6;
                         case ATTACK:
                             return 7;
+                        case HIT:
+                            return 4;
+                        case DEAD:
+                            return 5;
+                    }
+                case PINKSTAR:
+                    switch (enemy_state) {
+                        case IDLE:
+                            return 8;
+                        case RUNNING:
+                            return 6;
                         case HIT:
                             return 4;
                         case DEAD:
@@ -157,6 +177,8 @@ public class Constant {
             switch (enemy_type) {
                 case CRABBY:
                     return 15;
+                case PINKSTAR:
+                    return 20;
                 default:
                     return 0;
             }

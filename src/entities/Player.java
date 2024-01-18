@@ -474,7 +474,6 @@ public class Player extends Entity implements ObjectObserver {
         airSpeed = knockBackYSpeed;
         inAir = true;
 
-        System.out.println(dir);
         if (dir == RIGHT) {
             xSpeed = knockBackXSpeed;
         }
