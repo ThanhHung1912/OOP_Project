@@ -28,7 +28,7 @@ public class Constant {
         public static final int TREASURE_CHEST = 8;
         public static final int KEY = 9;
         public static final int PADLOCK = 10;
-        public static final int FLAG = 12;
+        public static final int FLAG = 11;
         public static final int PLATFORM = 12;
 
         public static final int RED_POTION_VALUE = 15;//HEALTH
@@ -108,8 +108,8 @@ public class Constant {
     }
 
     public static class EnemyConstant {
-        public static final int CRABBY = 1;
-        public static final int PINKSTAR = 0;
+        public static final int CRABBY = 0;
+        public static final int PINKSTAR = 1;
         public static final int IDLE = 0;
         public static final int RUNNING = 1;
         public static final int ATTACK = 2;
