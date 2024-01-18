@@ -131,6 +131,11 @@ public class Playing extends State implements Statemethods, ObjectObserver {
                 isAnyActive = true;
             }
         }
+        for (Pinkstar p : enemyManager.getPinkstars()) {
+            if (p.isActive()) {
+                isAnyActive = true;
+            }
+        }
         for (Chest c : objectManager.getChests()) {
             if (!c.isUnlocked()) {
                 isAnyLocked = true;

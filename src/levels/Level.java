@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import entities.Crabby;
+import entities.Pinkstar;
 import main.Game;
 import object.*;
 import utilz.HelpMethods;
@@ -17,6 +18,7 @@ public class Level {
     private BufferedImage img;
     private int[][] lvlData;
     private ArrayList<Crabby> crabs;
+    private ArrayList<Pinkstar> pinkstars;
     private ArrayList<GameContainer> containers;
     private ArrayList<Potion> potions;
     private ArrayList<Spike> spikes;
@@ -77,7 +79,9 @@ public class Level {
 
     private void createEnemies() {
         crabs = GetCrabs(img);
+        pinkstars = GetPinkstars(img);
     }
+
     private void createSpikes() {
         spikes = HelpMethods.GetSpikes(img);
     }
@@ -99,6 +103,9 @@ public class Level {
     }
     public ArrayList<Crabby> getCrabs() {
         return crabs;
+    }
+    public ArrayList<Pinkstar> getPinkstars() {
+        return pinkstars;
     }
     public Point getPlayerSpawn() {
         return playerSpawn;

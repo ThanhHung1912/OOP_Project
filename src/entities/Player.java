@@ -210,7 +210,7 @@ public class Player extends Entity implements ObjectObserver {
                 (int) (hitBox.y - yDrawOffset), width * flipW, height, null);
         drawUI(g);
 //        drawHitbox(g, lvlOffset);
-//        drawAttackBox(g, lvlOffset);
+        drawAttackBox(g, lvlOffset);
     }
     private void drawUI(Graphics g) {
         //Background UI
@@ -261,6 +261,8 @@ public class Player extends Entity implements ObjectObserver {
                     xSpeed = 0;
                 }
             }
+            //knockback for attackBpx
+            attackBox.x += xSpeed;
         }
         if(powerAttackActive){
             if((!left && !right) || (left && right)){
@@ -474,7 +476,6 @@ public class Player extends Entity implements ObjectObserver {
         airSpeed = knockBackYSpeed;
         inAir = true;
 
-        System.out.println(dir);
         if (dir == RIGHT) {
             xSpeed = knockBackXSpeed;
         }
