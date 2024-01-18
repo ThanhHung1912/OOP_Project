@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import gameStates.Playing;
 
-import static main.Game.SCALE;
+import static main.Game.*;
 import static utilz.Constant.*;
 import static utilz.Constant.Directions.RIGHT;
 import static utilz.Constant.ObjectConstant.*;
@@ -97,7 +97,7 @@ public class Player extends Entity implements ObjectObserver {
     }
 
     private void initAttackBox() {
-        attackBox = new Rectangle2D.Float(x + hitBox.width + (int) (Game.SCALE * 10), y, (int) (20 * Game.SCALE), (int) (20 * Game.SCALE));
+        attackBox = new Rectangle2D.Float(x + hitBox.width + (int) (Game.SCALE * 5), y, (int) (20 * Game.SCALE), (int) (20 * Game.SCALE));
     }
 
     //set direction
@@ -123,7 +123,9 @@ public class Player extends Entity implements ObjectObserver {
     public void update() {
         updateHealthBar();
         updatePowerBar();
-
+        if ((int) (hitBox.y / TILES_SIZE) + 1  == TILES_IN_HEIGHT) {
+            dead();
+        }
         if(currentHealth <= 0) {
             if(state != DEAD){
                 state = DEAD;
@@ -176,17 +178,19 @@ public class Player extends Entity implements ObjectObserver {
 
     }
     private void updateAttackBox() {
-        if (right && left){
-            if(flipW == 1){
-                attackBox.x = hitBox.x + hitBox.width + (int) (Game.SCALE * 10);
-            } else {
-                attackBox.x = hitBox.x - hitBox.width - (int) (Game.SCALE * 10);
-            }
-        } else if (right || (powerAttackActive && flipW == 1))
-            attackBox.x = hitBox.x + hitBox.width + (int) (Game.SCALE * 10);
-        else if (left || (powerAttackActive && flipW == -1))
-            attackBox.x = hitBox.x - hitBox.width - (int) (Game.SCALE * 10);
-        attackBox.y = hitBox.y + (Game.SCALE * 10);
+        if (!hit) {
+            if (right && left) {
+                if (flipW == 1) {
+                    attackBox.x = hitBox.x + hitBox.width + (int) (Game.SCALE * 5);
+                } else {
+                    attackBox.x = hitBox.x - hitBox.width - (int) (Game.SCALE * 5);
+                }
+            } else if (right || (powerAttackActive && flipW == 1))
+                attackBox.x = hitBox.x + hitBox.width + (int) (Game.SCALE * 5);
+            else if (left || (powerAttackActive && flipW == -1))
+                attackBox.x = hitBox.x - hitBox.width - (int) (Game.SCALE * 5);
+            attackBox.y = hitBox.y + (Game.SCALE * 10);
+        }
     }
 
     private void updateHealthBar() {
@@ -435,6 +439,8 @@ public class Player extends Entity implements ObjectObserver {
 
         key = 0;
 
+        flipX = 0;
+        flipW = 1;
         resetAttackBox();
 
         if (!IsEntityOnFloor(hitBox, lvlData))

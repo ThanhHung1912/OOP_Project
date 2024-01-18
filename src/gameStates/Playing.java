@@ -30,6 +30,7 @@ public class Playing extends State implements Statemethods, ObjectObserver {
     private PauseOverlay pauseOverlay;
     private GameOverOverlay gameOverOverlay;
     private LevelCompletedOverlay levelCompletedOverlay;
+    private boolean isAttacking = false;
     private int xLvlOffset;
     private int leftBorder = (int) (0.2 * Game.GAME_WIDTH);
     private int rightBorder = (int) (0.8 * Game.GAME_WIDTH);
@@ -178,8 +179,8 @@ public class Playing extends State implements Statemethods, ObjectObserver {
         drawClouds(g);
 
         levelManager.draw(g, xLvlOffset);
-        enemyManager.draw(g, xLvlOffset);
         objectManager.draw (g, xLvlOffset);
+        enemyManager.draw(g, xLvlOffset);
         player.render(g, xLvlOffset);
 
         if (paused) {
@@ -195,7 +196,7 @@ public class Playing extends State implements Statemethods, ObjectObserver {
     }
 
     private void drawClouds(Graphics g) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 5; i++) {
             g.drawImage(bigCloud, i * BIG_CLOUDS_WIDTH - (int) (xLvlOffset * 0.3), (int) (204 * Game.SCALE), BIG_CLOUDS_WIDTH, BIG_CLOUDS_HEIGHT, null);
         }
         for (int i = 0; i < smallCloudPos.length; i++) {
@@ -269,7 +270,10 @@ public class Playing extends State implements Statemethods, ObjectObserver {
                     player.setJump(true);
                     break;
                 case KeyEvent.VK_Z:
-                    player.setAttacking(true);
+                    if (!isAttacking) {
+                        player.setAttacking(true);
+                    }
+                    isAttacking = true;
                     break;
                 case KeyEvent.VK_BACK_SPACE:
                     Gamestate.state = Gamestate.MENU;
@@ -293,6 +297,8 @@ public class Playing extends State implements Statemethods, ObjectObserver {
                 case KeyEvent.VK_SPACE:
                     player.setJump(false);
                     break;
+                case KeyEvent.VK_Z:
+                    isAttacking = false;
             }
     }
     public void mouseDragged(MouseEvent e) {

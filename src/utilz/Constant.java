@@ -32,7 +32,7 @@ public class Constant {
         public static final int PLATFORM = 12;
 
         public static final int RED_POTION_VALUE = 15;//HEALTH
-        public static final int BLUE_POTION_VALUE = 10;//POWER
+        public static final int BLUE_POTION_VALUE = 30;//POWER
 
         public static final int CONTAINER_WIDTH_DEFAULT = 40;
         public static final int CONTAINER_HEIGHT_DEFAULT = 30;
@@ -158,6 +158,8 @@ public class Constant {
                             return 4;
                         case DEAD:
                             return 5;
+                        case ATTACK:
+                            return 7;
                     }
             }
 

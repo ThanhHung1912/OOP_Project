@@ -12,7 +12,7 @@ public class Pinkstar extends Enemy {
     private boolean preRoll = true;
     private int tickSinceLastDmgToPlayer;
     private int tickAfterRollInIdle;
-    private int rollDurationTick, rollDuration = 300;
+    private int rollDurationTick, rollDuration = 200;
 
     public Pinkstar(float x, float y) {
         super(x, y, PINKSTAR_WIDTH, PINKSTAR_HEIGHT, PINKSTAR);
@@ -47,6 +47,7 @@ public class Pinkstar extends Enemy {
                 case RUNNING:
                     if (canSeePlayer(lvlData, player)) {
                         newState(ATTACK);
+                        preRoll = true;
                         setWalkDir(player);
                     }
                     move(lvlData);
@@ -121,6 +122,7 @@ public class Pinkstar extends Enemy {
     private void checkRollOver() {
         rollDurationTick++;
         if (rollDurationTick >= rollDuration) {
+            newState(IDLE);
             rollDurationTick = 0;
         }
     }
