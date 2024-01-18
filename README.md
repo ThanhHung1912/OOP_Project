@@ -12,21 +12,30 @@ Dương Thi Quynh Nhu
 - Player: a Pirate.<br>
 - Enemy: Crabby.<br>
 - Spike: Death instant.<br>
-- Cannon: Damaging Player
+- Cannon: Damaging Player<br>
+
 
 
 ## Tutorial
 ### Run Main class
 1. Clone this repository using the command:  `git clone https://github.com/hungngoiu/OOP_Project.git`.
 2. Click Play.
-3. Press 'D' to move right and 'A' for vice versa.
-4. Kill enemy by pressing 'Z'
-5. Press Right-click button mouse to use special ability
 
+| Movement        | Keyboard       |   
+| ------------- |:-------------:| 
+| Left      | <--- | 
+| Right      | --->      |   
+| Jump | Spaceboard   |
+| Attack | Z   |   
+
+
+## Winning conditions
+Captain Blackbeard has to exterminate all Enemies.
 
 ## Design Patterns
 1. Singleton: For only one game instantiated and prevent multithreading.
-2. Facade: For GameWindow simplification.
+2. Observer Pattern: For Managing Object Effects.
+3. Facade: For GameWindow simplification.
 
 
 ## Screenshots from game
@@ -35,6 +44,10 @@ Dương Thi Quynh Nhu
 
 ## Demo Gameplay
 ![alt_text](https://github.com/hungngoiu/OOP_Project/blob/master/res/Animation.gif)
+
+### Power
+Right-click button to use power attack.<br>
+![alt_text](https://github.com/hungngoiu/OOP_Project/blob/GIF/res/PowerAttack.gif)
 
 ## Code and assets
 Path to code: `https://github.com/hungngoiu/OOP_Project/tree/master/src`.<br>
